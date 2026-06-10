@@ -1,369 +1,58 @@
 {
   "userProgress": {
-    "322cb4a651bf97ceb7d805de77b4721cd2f01acbe599ba7d37740b1e5b9b63fe": {
+    "afe5ba217d2db5525e0c93f2073809862cc414a19973fe659c6fecefaa95acd6": {
       "timeZone": "America/New_York",
       "days": {
-        "2026-04-17": {
-          "dailyCount": 3,
-          "lastComplete": 1776471005715,
+        "2026-06-04": {
+          "dailyCount": 1,
+          "lastComplete": 1780614095433,
           "adStartTime": 0
         }
       }
     },
-    "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f": {
+    "b2224b04d1f381a5d2bd901b84e9d38d4afed8c1cb36b56f663a0223b6358bde": {
       "timeZone": "America/New_York",
       "days": {
-        "2026-04-18": {
-          "dailyCount": 3,
-          "lastComplete": 1776566100470,
-          "adStartTime": 0
-        },
-        "2026-04-19": {
-          "dailyCount": 32,
-          "lastComplete": 1776650411332,
-          "adStartTime": 0
-        },
-        "2026-04-20": {
-          "dailyCount": 7,
-          "lastComplete": 1776688591509,
-          "adStartTime": 1776691429763
-        },
-        "2026-04-23": {
-          "dailyCount": 1,
-          "lastComplete": 1776968182871,
-          "adStartTime": 0
+        "2026-06-09": {
+          "dailyCount": 0,
+          "lastComplete": 0,
+          "adStartTime": 1781053218823
         }
       }
     }
   },
   "creatorStats": {
-    "Alex": {
-      "supports": 46,
-      "earnings": 2.3
+    "@5thdimentionalbeing367": {
+      "supports": 1,
+      "earnings": 0.05,
+      "videos": {
+        "main": {
+          "videoId": "main",
+          "videoTitle": "Main support page",
+          "videoThumbnail": "",
+          "platform": "unknown",
+          "supports": 1
+        }
+      },
+      "recentSupports": [
+        {
+          "name": "Anonymous #1446",
+          "pfp": "",
+          "anonId": "1446",
+          "emoji": "",
+          "time": 1780614095433
+        }
+      ]
     }
   },
   "events": [
     {
-      "timestamp": 1776470883018,
-      "creator": "Alex",
-      "fingerprint": "322cb4a651bf97ceb7d805de77b4721cd2f01acbe599ba7d37740b1e5b9b63fe",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776470943997,
-      "creator": "Alex",
-      "fingerprint": "322cb4a651bf97ceb7d805de77b4721cd2f01acbe599ba7d37740b1e5b9b63fe",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776471005715,
-      "creator": "Alex",
-      "fingerprint": "322cb4a651bf97ceb7d805de77b4721cd2f01acbe599ba7d37740b1e5b9b63fe",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776520875219,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776521299012,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776566100470,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776594600774,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776594716658,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776597918180,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776629751983,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776629803516,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776630357635,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776631114830,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776631419286,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776631555797,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776632945093,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776633617293,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776633754184,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776633858309,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776634553117,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776634634156,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776638981091,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776639491836,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776640253132,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776640765940,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776641344111,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776642448890,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776645933110,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776645999822,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776647524844,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776647571385,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776647646931,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776647700584,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776647747152,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776647860780,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776649100467,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776650361108,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776650411332,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776682902131,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776683936528,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776684062754,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776684147034,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776684199729,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776687169537,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776688591509,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
-      "type": "support_complete",
-      "timeZone": "America/New_York"
-    },
-    {
-      "timestamp": 1776968182871,
-      "creator": "Alex",
-      "fingerprint": "a390d99d9015d7b5fe5f0ca73b7d23469ffc065016dcf6a685288b5ab428e89f",
+      "timestamp": 1780614095433,
+      "creator": "@5thdimentionalbeing367",
+      "fingerprint": "afe5ba217d2db5525e0c93f2073809862cc414a19973fe659c6fecefaa95acd6",
       "type": "support_complete",
       "timeZone": "America/New_York"
     }
-  ]
+  ],
+  "supporterProfiles": {}
 }

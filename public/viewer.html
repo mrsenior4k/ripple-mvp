@@ -1,0 +1,5235 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Creator</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <style>
+  :root {
+    --bg: #080b16;
+    --card: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.1);
+    --text: #f8faff;
+    --muted: #aeb8d6;
+    --purple: #2563eb;
+    --pink: #38bdf8;
+    --blue: #0ea5e9;
+    --green: #35e0a1;
+    --yellow: #ffc95a;
+    --red: #ff6d7a;
+    --shadow: 0 24px 80px rgba(0,0,0,0.42);
+    --radius-xl: 32px;
+    --radius-lg: 24px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100%;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(124, 92, 255, 0.28), transparent 20%),
+      radial-gradient(circle at 100% 20%, rgba(79, 213, 255, 0.18), transparent 20%),
+      radial-gradient(circle at 30% 100%, rgba(255, 79, 207, 0.18), transparent 25%),
+      linear-gradient(180deg, #050814 0%, #0d1327 100%);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  body { position: relative; }
+
+  .glow {
+    position: fixed;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-1 {
+    width: 280px;
+    height: 280px;
+    background: var(--purple);
+    left: -100px;
+    top: -60px;
+  }
+
+  .glow-2 {
+    width: 260px;
+    height: 260px;
+    background: var(--pink);
+    right: -80px;
+    top: 120px;
+  }
+
+  .glow-3 {
+    width: 260px;
+    height: 260px;
+    background: var(--blue);
+    left: 20%;
+    bottom: -120px;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(255,255,255,0.9) 0 1px, transparent 2px),
+      radial-gradient(circle at 72% 24%, rgba(255,255,255,0.75) 0 1px, transparent 2px),
+      radial-gradient(circle at 30% 62%, rgba(255,255,255,0.65) 0 1px, transparent 2px),
+      radial-gradient(circle at 84% 74%, rgba(255,255,255,0.85) 0 1px, transparent 2px),
+      radial-gradient(circle at 58% 48%, rgba(255,255,255,0.55) 0 1px, transparent 2px),
+      radial-gradient(circle at 18% 82%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
+      radial-gradient(circle at 44% 16%, rgba(255,255,255,0.9) 0 1px, transparent 2px),
+      radial-gradient(circle at 92% 38%, rgba(255,255,255,0.7) 0 1px, transparent 2px);
+    animation: starTwinkle 6s ease-in-out infinite;
+  }
+
+  @keyframes starTwinkle {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+
+  .app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 0 16px 16px;
+}
+
+  .topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+
+  margin-top: 10px;
+  margin-bottom: 32px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ripple-logo {
+  width: 190px;
+  height: 56px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
+  margin: 0;
+  transform: translateX(-18px);
+}
+
+.brand-copy {
+  margin-left: 30px;
+}
+
+.brand-copy span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: linear-gradient(90deg, #ffe7a3, #ffffff, #ffd36b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(120,180,255,0.18);
+  font-weight: 500;
+}
+
+.supporter-menu {
+  position: relative;
+  margin-left: auto;
+  z-index: 20;
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+.profile-trigger {
+  position: relative;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  padding: 6px 12px 6px 6px;
+  background: rgba(2, 6, 14, 0.68);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+  backdrop-filter: blur(12px);
+}
+
+.profile-trigger-name {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.badge-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.supporter-badge {
+  height: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 224, 132, 0.34);
+  background: rgba(255, 224, 132, 0.12);
+  color: #ffe8a8;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0;
+  white-space: nowrap;
+  box-shadow: 0 0 12px rgba(255, 213, 96, 0.12);
+}
+
+.supporter-badge[data-badge-id="og_wave"] {
+  border-color: rgba(96, 200, 255, 0.42);
+  background: rgba(56, 189, 248, 0.14);
+  color: #bcecff;
+}
+
+.supporter-badge[data-badge-id="first_drop"] {
+  border-color: rgba(93, 236, 174, 0.38);
+  background: rgba(53, 224, 161, 0.12);
+  color: #bcf8df;
+}
+
+.supporter-badge[data-badge-id="wave_starter"] {
+  border-color: rgba(111, 167, 255, 0.4);
+  background: rgba(37, 99, 235, 0.16);
+  color: #c8dcff;
+}
+
+.supporter-badge[data-badge-id="fuel_provider"] {
+  border-color: rgba(255, 201, 90, 0.45);
+  background: rgba(255, 201, 90, 0.14);
+  color: #ffe9ae;
+}
+
+.supporter-badge[data-badge-id="day_one"] {
+  border-color: rgba(255, 126, 202, 0.42);
+  background: rgba(255, 126, 202, 0.12);
+  color: #ffd1ef;
+}
+
+.profile-trigger-badges {
+  max-width: 56px;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+
+.profile-trigger-badges .supporter-badge {
+  height: 16px;
+  padding: 0 5px;
+  font-size: 8px;
+}
+
+.menu-notice {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0;
+  background: linear-gradient(135deg, #ffe7a3, #ffc95a);
+  color: #3a2203;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+  box-shadow:
+    0 0 0 3px rgba(6, 11, 24, 0.95),
+    0 0 16px rgba(255, 201, 90, 0.68);
+  flex-shrink: 0;
+}
+
+.menu-notice.hidden {
+  display: none;
+}
+
+.profile-trigger .menu-notice {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  margin-left: 0;
+  z-index: 2;
+}
+
+.profile-avatar,
+.profile-preview-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+  font-size: 13px;
+  font-weight: 950;
+  flex-shrink: 0;
+}
+
+.profile-avatar img,
+.profile-preview-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-menu-icon {
+  width: 18px;
+  display: grid;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.profile-menu-icon span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(219, 227, 255, 0.82);
+}
+
+.supporter-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(310px, calc(100vw - 32px));
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(6, 11, 24, 0.96);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.36);
+  backdrop-filter: blur(18px);
+}
+
+.profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.profile-summary-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-summary-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.profile-summary strong {
+  display: inline-block;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-summary .profile-avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-top: 0;
+  color: white;
+  line-height: 1;
+}
+
+.profile-summary-copy > span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.profile-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.profile-stat-row span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.profile-stat-row strong {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.profile-menu-action,
+.profile-secondary-action {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 14px;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.profile-menu-action {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+}
+
+.profile-menu-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.72);
+}
+
+.profile-lock-note {
+  min-height: 18px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.badge-menu-section {
+  margin-top: 14px;
+}
+
+.badge-menu-toggle {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.06);
+  color: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.badge-menu-toggle:hover {
+  border-color: rgba(125, 211, 252, 0.3);
+  background: rgba(125, 211, 252, 0.08);
+}
+
+.badge-menu-toggle.has-notice {
+  border-color: rgba(255, 201, 90, 0.44);
+  box-shadow: 0 0 22px rgba(255, 201, 90, 0.16);
+}
+
+.badge-menu-toggle-copy {
+  min-width: 0;
+}
+
+.badge-menu-toggle-copy strong,
+.badge-menu-toggle-copy span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-menu-toggle-copy strong {
+  font-size: 13px;
+  line-height: 1.15;
+}
+
+.badge-menu-toggle-copy span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.badge-menu-toggle-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.badge-menu-chevron {
+  color: rgba(219, 227, 255, 0.78);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.badge-menu-panel {
+  margin-top: 10px;
+}
+
+.badge-menu-panel.hidden {
+  display: none;
+}
+
+.badge-menu-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.badge-menu-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.badge-collection {
+  display: grid;
+  gap: 8px;
+}
+
+.badge-collection.hidden {
+  display: none;
+}
+
+.badge-option {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.055);
+  color: white;
+  cursor: pointer;
+  text-align: left;
+}
+
+.badge-option:hover:not(:disabled) {
+  border-color: rgba(255, 224, 132, 0.42);
+  background: rgba(255, 224, 132, 0.08);
+}
+
+.badge-option:disabled {
+  cursor: not-allowed;
+}
+
+.badge-option.locked {
+  opacity: 0.55;
+}
+
+.badge-option.selected {
+  border-color: rgba(125, 211, 252, 0.45);
+  background: rgba(125, 211, 252, 0.08);
+}
+
+.badge-option.equipped {
+  border-color: rgba(53, 224, 161, 0.38);
+  background: rgba(53, 224, 161, 0.08);
+}
+
+.badge-option.has-notice {
+  border-color: rgba(255, 201, 90, 0.4);
+  box-shadow: 0 0 18px rgba(255, 201, 90, 0.12);
+}
+
+.badge-option-copy {
+  min-width: 0;
+}
+
+.badge-option-copy strong,
+.badge-option-copy span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-option-copy strong {
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.badge-option-copy span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.badge-option-state {
+  color: #7dd3fc;
+  font-size: 10px;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.badge-option-right {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.badge-option-notice {
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  box-shadow:
+    0 0 0 2px rgba(6, 11, 24, 0.92),
+    0 0 12px rgba(255, 201, 90, 0.58);
+}
+
+.badge-option.locked .badge-option-state {
+  color: rgba(219, 227, 255, 0.7);
+}
+
+.badge-option.equipped .badge-option-state {
+  color: var(--green);
+}
+
+.badge-detail-card {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.055);
+}
+
+.badge-detail-card.hidden {
+  display: none;
+}
+
+.badge-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.badge-detail-back {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.07);
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.badge-detail-state {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.badge-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.badge-detail-head strong {
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.badge-detail-description {
+  margin: 9px 0 0;
+  color: #dceaff;
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.badge-detail-requirement {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.badge-detail-action {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+  font-size: 12px;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.badge-detail-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.72);
+}
+
+.profile-secondary-action {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+  .layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 18px;
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+    border-radius: var(--radius-xl);
+  }
+
+  .mission {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 720px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission + .card {
+    margin-top: 18px;
+  }
+
+  .mission::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: -90px;
+    right: -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,79,207,0.22), transparent 68%);
+    pointer-events: none;
+  }
+
+  .mission-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .mission-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: #dbe3ff;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 900;
+  }
+
+  .mission-tag-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--green);
+    box-shadow: 0 0 14px var(--green);
+  }
+
+  .verified {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(53,224,161,0.12);
+    border: 1px solid rgba(53,224,161,0.25);
+    color: #baf3dc;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .creator-core {
+    text-align: center;
+    padding: 10px 0 0;
+  }
+
+  .avatar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .avatar-ring {
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9, #2563eb);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.35);
+  }
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #121831, #0b1020);
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .headline {
+  margin: 0 auto;
+  max-width: 100%;
+  font-size: clamp(26px, 2.45vw, 38px);
+  line-height: 1.06;
+  letter-spacing: -1px;
+  font-weight: 950;
+  overflow-wrap: anywhere;
+}
+
+  .headline-accent {
+    background: linear-gradient(90deg, #ffe7a3, #ffffff, #ffd36b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 18px rgba(255, 215, 120, 0.18);
+  }
+
+  .well-scene {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    margin: 10px auto 0;
+    aspect-ratio: 1491 / 1055;
+    background: transparent;
+    isolation: isolate;
+  }
+
+  .well-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: filter 0.8s ease;
+  }
+
+  .well-water-shimmer {
+    position: absolute;
+    left: 48.6%;
+    top: 26.7%;
+    width: 14.4%;
+    height: 5.3%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    overflow: hidden;
+    background:
+  radial-gradient(
+    ellipse 55% 60% at 30% 35%,
+    rgba(40, 170, 255, 0.30) 0%,
+    rgba(20, 120, 220, 0.16) 35%,
+    rgba(0, 80, 160, 0) 70%
+  ),
+
+  radial-gradient(
+    ellipse 45% 55% at 75% 60%,
+    rgba(80, 210, 255, 0.18) 0%,
+    rgba(0, 120, 220, 0) 70%
+  );
+    background-size: 130% 140%, 120% 130%;
+    background-position: 30% 40%, 70% 60%;
+    filter: blur(1.5px);
+    animation: waterDrift 7s ease-in-out infinite;
+    will-change: background-position;
+  }
+
+  @keyframes waterDrift {
+    0% { background-position: 28% 38%, 72% 62%; }
+    25% { background-position: 36% 44%, 64% 56%; }
+    50% { background-position: 32% 36%, 68% 64%; }
+    75% { background-position: 40% 42%, 60% 58%; }
+    100% { background-position: 28% 38%, 72% 62%; }
+  }
+
+  .well-water-shimmer::before,
+  .well-water-shimmer::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 18%;
+    height: 40%;
+    border-radius: 50%;
+    border: 1.5px solid rgba(220, 240, 255, 0.55);
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+    filter: blur(0.6px);
+    animation: waterRipple 5s ease-out infinite;
+  }
+
+  .well-water-shimmer::after {
+    animation-delay: 2.5s;
+  }
+
+  @keyframes waterRipple {
+    0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0; }
+    15% { opacity: 0.55; }
+    100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+  }
+
+  .well-glow-halo {
+    position: absolute;
+    left: 47.2%;
+    top: 28%;
+    width: 0%;
+    height: 0%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(255, 220, 110, 0.85) 0%, rgba(255, 180, 50, 0.55) 18%, rgba(255, 150, 30, 0.28) 40%, rgba(255, 130, 20, 0.10) 65%, rgba(255, 130, 20, 0) 82%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.9s ease, width 1.0s ease, height 1.0s ease;
+  }
+
+  .well-glow-water {
+    display: none;
+  }
+
+  .well-scene.glow-active .well-glow-water-2 {
+    position: absolute;
+    top: 26.6%;
+    left: 47.2%;
+    width: 24%;
+    height: 12%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255, 245, 180, 1) 0%, rgba(255, 215, 70, 0.95) 45%, rgba(255, 185, 30, 0.45) 75%, rgba(255, 185, 30, 0) 100%);
+    filter: blur(2px);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 1;
+  }
+
+  .well-beams {
+    position: absolute;
+    left: 47.2%;
+    top: 24.5%;
+    width: 42%;
+    height: 38%;
+    transform: translate(-50%, -92%);
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+    transition: opacity 0.5s ease;
+  }
+
+  .well-beams span {
+    position: absolute;
+    left: 54%;
+    bottom: 6;
+    width: 4%;
+    height: 100%;
+    transform-origin: bottom center;
+    border-radius: 999px 999px 0 0;
+    background: linear-gradient(to top, rgba(255, 235, 120, 0.85), rgba(255, 190, 40, 0.38), rgba(255, 190, 40, 0));
+    filter: blur(8px);
+  }
+
+  .well-beams span:nth-child(1) { transform: translateX(-50%) rotate(-34deg); height: 78%; }
+  .well-beams span:nth-child(2) { transform: translateX(-50%) rotate(-21deg); height: 96%; }
+  .well-beams span:nth-child(3) { transform: translateX(-50%) rotate(-8deg); height: 108%; }
+  .well-beams span:nth-child(4) { transform: translateX(-50%) rotate(8deg); height: 108%; }
+  .well-beams span:nth-child(5) { transform: translateX(-50%) rotate(21deg); height: 96%; }
+  .well-beams span:nth-child(6) { transform: translateX(-50%) rotate(34deg); height: 78%; }
+
+  .well-sparks {
+    position: absolute;
+    left: 47.2%;
+    top: 20%;
+    width: 38%;
+    height: 28%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .well-sparks i {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #ffd86a;
+    box-shadow: 0 0 12px #ffd86a;
+    animation: sparkFloat 2.4s ease-in-out infinite;
+  }
+
+  .well-sparks i:nth-child(1) { left: 12%; top: 65%; animation-delay: 0s; }
+  .well-sparks i:nth-child(2) { left: 30%; top: 35%; animation-delay: 0.3s; }
+  .well-sparks i:nth-child(3) { left: 48%; top: 20%; animation-delay: 0.7s; }
+  .well-sparks i:nth-child(4) { left: 66%; top: 38%; animation-delay: 1s; }
+  .well-sparks i:nth-child(5) { left: 82%; top: 62%; animation-delay: 1.3s; }
+  .well-sparks i:nth-child(6) { left: 55%; top: 72%; animation-delay: 1.6s; }
+
+  @keyframes sparkFloat {
+    0%, 100% { transform: translateY(0) scale(0.7); opacity: 0.25; }
+    50% { transform: translateY(-22px) scale(1.2); opacity: 1; }
+  }
+
+  .well-scene.glow-active .well-beams {
+    opacity: 1;
+    animation: beamPulse 1.8s ease-in-out infinite;
+  }
+
+  .well-scene.glow-active .well-sparks {
+    opacity: 1;
+  }
+
+  @keyframes beamPulse {
+    0%, 100% {
+      filter: brightness(1);
+      transform: translate(-50%, -92%) scaleY(0.96);
+    }
+    50% {
+      filter: brightness(1.25);
+      transform: translate(-50%, -92%) scaleY(1.08);
+    }
+  }
+
+  .well-scene.glow-active .well-glow-halo {
+    opacity: 0;
+  }
+
+  .well-scene.glow-active .well-glow-water {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    animation: waterGoldPulse 1.6s ease-in-out infinite;
+    filter: blur(3px) brightness(1.15);
+  }
+
+  .well-scene.glow-active .well-water-shimmer::before,
+  .well-scene.glow-active .well-water-shimmer::after {
+    opacity: 0;
+    animation-play-state: paused;
+    transition: opacity 0.5s ease;
+  }
+
+  .well-scene.glow-active .well-water-shimmer {
+    opacity: 0;
+  }
+
+  .well-scene.glow-active .well-img {
+    filter:
+      drop-shadow(0 0 22px rgba(255, 200, 80, 0.60))
+      drop-shadow(0 0 56px rgba(255, 170, 40, 0.40));
+  }
+
+  @keyframes waterGoldPulse {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      filter: blur(1.1px) brightness(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.03);
+      filter: blur(1.4px) brightness(1.12);
+    }
+  }
+
+  .sign-count {
+    position: absolute;
+    left: 70.5%;
+    top: 31.9%;
+    width: 9.5%;
+    height: 7.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(-1deg);
+  }
+
+  .wish-sign-number {
+    line-height: 1;
+    transform: translateY(-2px);
+  }
+
+  .sign-count-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-weight: 900;
+    font-size: clamp(20px, 4.5vw, 44px);
+    color: #2a1408;
+    text-shadow: 0 1px 0 rgba(255, 220, 150, 0.55), 0 0 2px rgba(0,0,0,0.15);
+    line-height: 1;
+    letter-spacing: -0.12em;
+    display: inline-block;
+    min-width: 3ch;
+    text-align: center;
+  }
+
+  .well-scene.glow-active .sign-count-num {
+    animation: countPop 0.6s ease-out;
+  }
+
+  @keyframes countPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); color: #7a3a08; }
+    100% { transform: scale(1); }
+  }
+
+  .mission-controls {
+    max-width: 620px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .reward-strip {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+    margin-bottom: 18px;
+  }
+
+  .reward-pill {
+    padding: 10px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .main-action {
+    width: 100%;
+    min-height: 78px;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+    color: white;
+    font-size: 22px;
+    font-weight: 950;
+    letter-spacing: -0.6px;
+    cursor: pointer;
+    box-shadow: 0 22px 44px rgba(124, 92, 255, 0.34);
+    transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .main-action::before,
+  .main-action::after {
+    content: "";
+    position: absolute;
+    left: var(--x, 50%);
+    top: var(--y, 50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .main-action:hover::before {
+    animation: rippleRing 1s ease-out;
+  }
+
+  .main-action:hover::after {
+    animation: rippleRing 1s ease-out 0.3s;
+  }
+
+  .main-action span {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes rippleRing {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(18); opacity: 0; }
+  }
+
+  .main-action:hover { transform: translateY(-2px); }
+
+  .main-action:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .support-actions {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .secondary-btn {
+    min-height: 58px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 0 18px;
+    cursor: pointer;
+  }
+
+  #progressContainer {
+    width: 100%;
+    height: 16px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-top: 18px;
+  }
+
+  #progressBar {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ffe7a3, #ffffff, #ffd36b);
+    box-shadow:
+      0 0 12px rgba(255, 215, 120, 0.35),
+      0 0 24px rgba(255, 215, 120, 0.18);
+    transition: width 0.1s linear;
+  }
+
+  .hidden { display: none; }
+
+  #progressText {
+    min-height: 20px;
+    margin: 12px 0 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  #status {
+    min-height: 28px;
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 950;
+  }
+
+  #countdown {
+    min-height: 22px;
+    margin: 8px 0 0;
+    text-align: center;
+    color: var(--yellow);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .side {
+    display: grid;
+    gap: 18px;
+  }
+
+  .card {
+    padding: 22px;
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    letter-spacing: -0.4px;
+    color: #ffffff;
+
+  text-shadow:
+
+    0 0 18px rgba(80, 180, 255, 0.25);
+    
+  }
+
+  .content-card {
+    max-width: 540px;
+    margin: 18px auto 28px;
+    display: none;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .content-thumb {
+    width: 96px;
+    height: 64px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: #111827;
+  }
+
+  .content-title {
+    font-weight: 900;
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  .content-platform {
+    margin-top: 6px;
+    color: #7dd3fc;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .card p.lead {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .stat-box {
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .stat-value {
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 950;
+    letter-spacing: -1px;
+  }
+
+  .live-feed {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+
+  max-height: 520px;
+  overflow-y: auto;
+
+  padding-right: 4px;
+}
+
+  .feed-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .feed-item.new-support {
+  position: relative;
+  overflow: hidden;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: goldBeamOpen 1.15s ease-out forwards;
+}
+
+.feed-item.new-support .feed-left,
+.feed-item.new-support .feed-time {
+  opacity: 0;
+  animation: revealFeedText 0.35s ease-out forwards;
+  animation-delay: 0.9s;
+}
+
+.feed-item.new-support::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 210, 90, 0) 0%,
+      rgba(255, 235, 160, 0.95) 20%,
+      rgba(255, 250, 210, 1) 50%,
+      rgba(255, 235, 160, 0.95) 80%,
+      rgba(255, 210, 90, 0) 100%
+    );
+
+  filter:
+    blur(0.4px)
+    brightness(1.25);
+
+  box-shadow:
+    0 0 18px rgba(255, 210, 90, 0.55),
+    0 0 42px rgba(255, 210, 90, 0.35),
+    0 0 82px rgba(255, 220, 120, 0.18),
+    inset 0 0 26px rgba(255, 245, 200, 0.26);
+
+  animation: goldBeamFade 1.25s ease-out forwards;
+}
+
+.feed-item.new-support > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes goldBeamOpen {
+  0% {
+    transform: scaleX(0);
+
+    background:
+      rgba(255, 228, 120, 0.95);
+
+    filter:
+      brightness(2)
+      saturate(1.35);
+  }
+
+  38% {
+    transform: scaleX(1.03);
+
+    background:
+      rgba(255, 220, 110, 0.82);
+
+    filter:
+      brightness(1.8)
+      saturate(1.25);
+  }
+
+  70% {
+    transform: scaleX(1);
+
+    background:
+      rgba(70, 45, 18, 0.24);
+
+    filter:
+      brightness(1.15);
+  }
+
+  100% {
+    transform: scaleX(1);
+
+    background:
+      rgba(10, 16, 28, 0.58);
+
+    filter:
+      brightness(1);
+  }
+}
+
+@keyframes goldBeamFade {
+  0% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes revealFeedText {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  .feed-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .feed-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background:
+      linear-gradient(135deg, rgba(255, 225, 135, 0.24), rgba(56, 189, 248, 0.14)),
+      rgba(255,255,255,0.09);
+    border: 1px solid rgba(255, 220, 120, 0.32);
+    box-shadow:
+      0 0 14px rgba(255, 205, 84, 0.18),
+      inset 0 0 10px rgba(255, 242, 190, 0.08);
+    font-size: 13px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .feed-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+  .feed-text strong {
+    display: block;
+    font-size: 13px;
+  }
+
+  .feed-name-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  .feed-name-line strong {
+    display: inline;
+  }
+
+  .feed-text span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .identity-card {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.identity-card h3 {
+  margin: 0 0 8px;
+}
+
+.identity-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.identity-card button {
+  margin-top: 14px;
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 900;
+  color: white;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  cursor: pointer;
+}
+
+.profile-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.profile-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.profile-preview-avatar {
+  width: 54px;
+  height: 54px;
+  font-size: 20px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  color: white;
+  font-weight: 800;
+}
+
+.profile-file {
+  width: 100%;
+  color: white;
+  font-weight: 800;
+}
+
+.profile-error {
+  min-height: 18px;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+  .feed-time {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 800;
+  }
+  .side .card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(11, 31, 48, 0.82);
+}
+
+.side .card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/well-inside-bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 135%;
+  opacity: 0.5;
+  filter: brightness(1.18) saturate(1.12);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.side .card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 14, 0.35);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.side .card > * {
+  position: relative;
+  z-index: 1;
+}
+.feed-item {
+  background:
+    linear-gradient(90deg, rgba(255, 213, 110, 0.2), rgba(255, 248, 210, 0.09) 48%, rgba(78, 205, 255, 0.1)),
+    rgba(19, 38, 56, 0.78);
+
+  border: 1px solid rgba(255, 225, 135, 0.42);
+
+  backdrop-filter: blur(8px);
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 244, 194, 0.1),
+    0 0 20px rgba(255, 210, 92, 0.18),
+    0 0 40px rgba(98, 207, 255, 0.08),
+    0 10px 25px rgba(0,0,0,0.25);
+}
+
+.feed-text strong {
+  color: #fff8df;
+  text-shadow: 0 0 12px rgba(255, 214, 104, 0.22);
+}
+
+.feed-text span,
+.feed-time {
+  color: #dceaff;
+}
+
+.side .card > * {
+  position: relative;
+  z-index: 1;
+}
+
+  .success { color: var(--green); }
+  .danger { color: var(--red); }
+  .warning { color: var(--yellow); }
+
+  .ad-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: radial-gradient(circle at center, rgba(37, 99, 235, 0.18), rgba(3, 7, 18, 0.92));
+    backdrop-filter: blur(10px);
+  }
+
+  .ad-overlay.hidden {
+    display: none;
+  }
+
+  .ad-shell {
+    width: min(920px, 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 225, 135, 0.28);
+    background: rgba(5, 9, 20, 0.96);
+    box-shadow:
+      0 0 30px rgba(255, 208, 92, 0.14),
+      0 30px 90px rgba(0, 0, 0, 0.55);
+  }
+
+  .ad-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    color: #fff4d2;
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .ad-close {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .ad-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #030712;
+    object-fit: contain;
+  }
+
+  .wish-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(33, 24, 54, 0.34), rgba(4, 7, 16, 0.9));
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+  }
+
+  .wish-overlay.hidden { display: none; }
+
+  .wish-scene {
+    position: relative;
+    width: min(92vw, 900px);
+    height: min(84vh, 700px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wish-glow {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(143, 211, 255, 0.18), rgba(255, 217, 117, 0.08), transparent 72%);
+    filter: blur(18px);
+    opacity: 0;
+  }
+
+  .wish-title {
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(30px, 5vw, 64px);
+    font-weight: 900;
+    letter-spacing: -1.6px;
+    color: #fff3d8;
+    text-shadow:
+      0 0 10px rgba(255, 232, 179, 0.18),
+      0 0 34px rgba(255, 255, 255, 0.14);
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  .emoji-picker {
+  margin-top: 14px;
+}
+
+.emoji-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.emoji-row button {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
+  font-size: 22px;
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+
+  transform: scale(1);
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.18),
+    inset 0 0 8px rgba(255,255,255,0.03);
+}
+
+.emoji-row button:hover {
+  transform: scale(1.16);
+
+  background: rgba(255,255,255,0.14);
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.28),
+    0 0 16px rgba(120,180,255,0.12);
+}
+
+.emoji-row button:active {
+  transform: scale(0.96);
+}
+
+.emoji-row.hidden,
+.sticker-row.hidden {
+  display: none;
+}
+
+.sticker-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.sticker-btn {
+  display: grid;
+  place-items: center;
+  position: relative;
+  min-height: 156px;
+  border: 1px solid rgba(255, 225, 135, 0.36);
+  border-radius: 16px;
+  padding: 12px;
+  background:
+    linear-gradient(135deg, rgba(255, 217, 117, 0.2), rgba(56, 189, 248, 0.12)),
+    rgba(255,255,255,0.08);
+  color: #fff8df;
+  cursor: pointer;
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.24),
+    inset 0 0 16px rgba(255, 244, 194, 0.08);
+  overflow: hidden;
+  transform: scale(1);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sticker-btn:not(.locked):hover {
+  transform: scale(1.04);
+  border-color: rgba(255, 225, 135, 0.52);
+  background:
+    linear-gradient(135deg, rgba(255, 217, 117, 0.26), rgba(56, 189, 248, 0.16)),
+    rgba(255,255,255,0.11);
+  box-shadow:
+    0 16px 30px rgba(0,0,0,0.3),
+    0 0 18px rgba(255, 215, 120, 0.13),
+    inset 0 0 18px rgba(255, 244, 194, 0.1);
+}
+
+.sticker-btn:not(.locked):active {
+  transform: scale(0.98);
+}
+
+.sticker-btn strong {
+  display: block;
+}
+
+.sticker-btn strong {
+  font-size: 13px;
+  line-height: 1.1;
+}
+
+.sticker-btn video,
+.sticker-preview-canvas {
+  display: block;
+  width: min(160px, 100%);
+  height: min(160px, 42vw);
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+  filter: none;
+}
+
+.sticker-btn.first-sticker .sticker-preview-canvas {
+  transform: scale(1.16);
+  transform-origin: center;
+}
+
+.sticker-btn.locked {
+  cursor: not-allowed;
+}
+
+.sticker-btn.locked .sticker-preview-canvas,
+.sticker-btn.locked strong {
+  opacity: 0.46;
+  filter: grayscale(0.28) saturate(0.74);
+}
+
+.sticker-lock-overlay {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(4, 10, 22, 0.74);
+  border: 1px solid rgba(255, 225, 135, 0.24);
+  color: #fff8df;
+  text-align: center;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+.sticker-lock-overlay strong {
+  opacity: 1 !important;
+  filter: none !important;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.sticker-lock-overlay span {
+  color: #7dd3fc;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.sticker-message {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff4d2 !important;
+  font-weight: 900;
+}
+
+.feed-sticker-video,
+.feed-sticker-canvas {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+  filter: none;
+}
+
+.feed-item.has-sticker {
+  min-height: 180px;
+}
+
+.feed-item.has-sticker .feed-left {
+  align-items: center;
+}
+
+.feed-sticker-label {
+  color: #fff4d2 !important;
+  font-size: 12px !important;
+  font-weight: 900;
+}
+
+  .wish-svg {
+    width: min(92vw, 860px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  .support-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.08);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:900;
+  color:white;
+}
+
+.support-avatar img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+  .wish-fade { opacity: 0; }
+
+  @media (max-width: 1040px) {
+  .layout {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-column {
+    display: contents;
+  }
+
+  .live-feed {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+  .mission {
+    min-height: auto;
+    order: 1;
+  }
+
+  .headline {
+    max-width: 760px;
+    font-size: clamp(28px, 4.8vw, 36px);
+    line-height: 1.05;
+    letter-spacing: -1.2px;
+  }
+
+  .avatar-ring {
+    width: 128px;
+    height: 128px;
+  }
+
+  .avatar {
+    font-size: 42px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .side {
+    order: 2;
+  }
+
+  .main-column .card {
+    order: 3;
+  }
+}
+
+  @media (max-width: 720px) {
+  .mission {
+    min-height: auto;
+    justify-content: flex-start;
+    padding: 18px;
+  }
+
+  .support-actions,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ripple-logo {
+    width: 170px !important;
+    height: 50px;
+    transform: translateX(-12px);
+  }
+
+  .brand-copy {
+    margin-left: 26px;
+  }
+
+  .profile-trigger-name {
+    display: none;
+  }
+
+  .brand-copy span {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+
+  .headline {
+    max-width: 100%;
+    font-size: clamp(22px, 7vw, 30px);
+    line-height: 1.08;
+    letter-spacing: -0.6px;
+  }
+
+  .avatar-ring {
+    width: 108px;
+    height: 108px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .avatar {
+    font-size: 34px;
+  }
+
+  .subcopy {
+    font-size: 16px;
+  }
+}
+.side .card {
+  position: relative !important;
+  overflow: hidden !important;
+  background-color: rgba(11, 31, 48, 0.82) !important;
+  background-image:
+    linear-gradient(180deg, rgba(19, 61, 84, 0.14), rgba(6, 25, 40, 0.5)),
+    linear-gradient(90deg, rgba(255, 211, 100, 0.14), rgba(67, 194, 232, 0.1)),
+    url("/well-inside-bg.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.side .card::after {
+  display: none !important;
+}
+</style>
+</head>
+<body style="padding-top: 45px;">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+  <div class="stars"></div>
+
+
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+  <img src="/ripple-logo.png" class="ripple-logo" alt="Ripple logo">
+
+  <div class="brand-copy">
+  <span>Support that echoes.</span>
+</div>
+
+      
+    </div>
+
+    <div class="supporter-menu" id="supporterMenu">
+      <button id="profileMenuButton" class="profile-trigger" onclick="toggleSupporterMenu(event)" aria-haspopup="true" aria-expanded="false" aria-label="Open supporter menu">
+        <span class="profile-avatar" id="supporterMenuAvatar">A</span>
+        <span class="profile-trigger-name" id="supporterMenuName">Anonymous</span>
+        <span class="badge-strip profile-trigger-badges" id="supporterMenuBadges" aria-label="Supporter badges"></span>
+        <span id="profileMenuNotice" class="menu-notice hidden" aria-label="New badges">0</span>
+        <span class="profile-menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <div id="supporterMenuDropdown" class="supporter-dropdown hidden">
+        <div class="profile-summary">
+          <span class="profile-avatar" id="supporterDropdownAvatar">A</span>
+          <div class="profile-summary-copy">
+            <div class="profile-summary-name">
+              <strong id="supporterDropdownName">Anonymous</strong>
+              <span class="badge-strip" id="supporterDropdownBadges" aria-label="Supporter badges"></span>
+            </div>
+            <span id="supporterDropdownState">Anonymous supporter</span>
+          </div>
+        </div>
+
+        <div class="profile-stat-row">
+          <span>Total supports</span>
+          <strong id="supporterTotalSupports">0</strong>
+        </div>
+
+        <div class="badge-menu-section">
+          <button id="badgeMenuToggle" class="badge-menu-toggle" type="button" onclick="openBadgesMenu(event)">
+            <span class="badge-menu-toggle-copy">
+              <strong>Badges</strong>
+              <span id="badgeMenuSummary">View and equip badges</span>
+            </span>
+            <span class="badge-menu-toggle-right">
+              <span id="badgeMenuNotice" class="menu-notice hidden" aria-label="New badges">0</span>
+              <span class="badge-menu-chevron" aria-hidden="true">›</span>
+            </span>
+          </button>
+
+          <div id="badgeMenuPanel" class="badge-menu-panel hidden">
+            <div class="badge-menu-panel-head">
+              <button type="button" class="badge-detail-back" onclick="closeBadgesMenu(event)">Back</button>
+              <p class="badge-menu-title">Badges</p>
+            </div>
+            <div id="supporterBadgeCollection" class="badge-collection"></div>
+            <div id="supporterBadgeDetail" class="badge-detail-card hidden"></div>
+          </div>
+        </div>
+
+        <button id="editProfileBtn" class="profile-menu-action" onclick="startSupporterLogin()">
+          Edit profile
+        </button>
+        <p id="editProfileLockNote" class="profile-lock-note"></p>
+      </div>
+    </div>
+  </header>
+
+    <div class="layout">
+      <div class="main-column">
+      <section class="panel mission">
+        <div>
+          <div class="mission-head">
+            <div class="mission-tag">
+              <span class="mission-tag-dot"></span>
+              support mission active
+            </div>
+            <div class="verified">Verified creator</div>
+          </div>
+
+          <div class="creator-core">
+            <div class="content-card" id="contentCard">
+  <img class="content-thumb" id="contentThumb" src="" alt="">
+
+  <div>
+    <div class="content-title" id="contentTitleText"></div>
+    <div class="content-platform" id="contentPlatformText"></div>
+  </div>
+</div>
+            <div class="avatar-wrap">
+              <div class="avatar-ring">
+                <div class="avatar" id="avatar">A</div>
+              </div>
+            </div>
+
+            <h1 class="headline headline-accent">
+  Boost <span id="headlineName">Alex</span>
+</h1>
+            
+
+            <div class="well-scene" id="wellScene" aria-label="A magical well that glows when supporters arrive">
+              
+  <img class="well-img well-img-blue" id="wellImgBlue" src="/well-img-blue.png" alt="">
+
+              <div class="well-water-shimmer" aria-hidden="true"></div>
+              <div class="well-glow-halo" aria-hidden="true"></div>
+              <div class="well-glow-water" aria-hidden="true"></div>
+              <div class="well-glow-water-2" aria-hidden="true"></div>
+              <div class="well-beams" aria-hidden="true">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<div class="well-sparks" aria-hidden="true">
+  <i></i><i></i><i></i><i></i><i></i><i></i>
+</div>
+              <div class="sign-count wish-sign-number" id="signCount" aria-live="polite">
+                <span class="sign-count-num" id="signCountNum">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mission-controls">
+          <div class="reward-strip">
+            <div class="reward-pill">15-second watch</div>
+            <div class="reward-pill">Instant support</div>
+          </div>
+
+          <button id="watchBtn" class="main-action" onclick="startAd()">
+            <span>Watch sponsor to support</span>
+          </button>
+
+          <div class="support-actions">
+            <div></div>
+            <button id="copyBtn" class="secondary-btn" onclick="copyLink()">Share page</button>
+          </div>
+
+          <div id="progressContainer" class="hidden">
+            <div id="progressBar" style="width: 0%;"></div>
+          </div>
+
+          <p id="progressText"></p>
+          <p id="status" class="success">Support sent!</p>
+          <p id="countdown"></p>
+        </div>
+      </section>
+      <div class="card">
+    <h3>Well activity</h3>
+    <p class="lead">Watch the support pool rise in real time.</p>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-label">Supports</div>
+        <div class="stat-value" id="supportsValue">0</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+      <aside class="side">
+  <div class="card">
+    <h3>The deep end</h3>
+    <p class="lead">Wishes gathering below the surface.</p>
+
+   <div class="live-feed" id="liveFeed"></div>
+
+<div class="emoji-picker hidden" id="emojiPicker">
+  <p class="lead" id="reactionPickerTitle">Send a reaction into the deep end:</p>
+
+  <div class="emoji-row" id="emojiRow">
+    <button onclick="sendEmoji('🔥')">🔥</button>
+    <button onclick="sendEmoji('💙')">💙</button>
+    <button onclick="sendEmoji('💜')">💜</button>
+    <button onclick="sendEmoji('🧡')">🧡</button>
+    <button onclick="sendEmoji('👏')">👏</button>
+    <button onclick="sendEmoji('🙌')">🙌</button>
+    <button onclick="sendEmoji('✨')">✨</button>
+    <button onclick="sendEmoji('⭐')">⭐</button>
+    <button onclick="sendEmoji('🚀')">🚀</button>
+    <button onclick="sendEmoji('👑')">👑</button>
+    <button onclick="sendEmoji('💎')">💎</button>
+    <button onclick="sendEmoji('🙏')">🙏</button>
+  </div>
+
+  <div class="sticker-row hidden" id="stickerRow"></div>
+</div>
+  </div>
+
+  <div id="identityPrompt" class="hidden">
+  <div class="identity-card">
+    <h3>Claim your presence</h3>
+
+    <p>
+      You’ve supported creators 3 times. Save your identity in the deep end.
+    </p>
+
+    <button onclick="startSupporterLogin()">
+      Continue
+    </button>
+  </div>
+</div>
+
+<div id="supporterLoginModal" class="wish-overlay hidden">
+  <div class="identity-card" style="max-width:360px;">
+    <h3 id="supporterModalTitle">Claim your presence</h3>
+
+    <div class="profile-form">
+      <div class="profile-preview">
+        <div class="profile-preview-avatar" id="supporterProfilePreview">A</div>
+      </div>
+    <input
+      id="supporterNameInput"
+      class="profile-input"
+      placeholder="Supporter name"
+      maxlength="24"
+    >
+
+    <input
+  type="file"
+  id="supporterPfpInput"
+  accept="image/*"
+  class="profile-file"
+  onchange="previewSupporterPicture()"
+>
+
+    <button class="profile-secondary-action" onclick="clearSupporterPicture()">
+      Remove picture
+    </button>
+
+    <div class="profile-error" id="supporterProfileError"></div>
+
+    <button onclick="saveSupporterProfile()">
+      Save identity
+    </button>
+
+    <button class="profile-secondary-action" onclick="closeSupporterLogin()">
+      Cancel
+    </button>
+    </div>
+  </div>
+</div>
+
+  
+</aside>
+</div>
+</div>
+          
+  <div id="adOverlay" class="ad-overlay hidden" aria-hidden="true">
+    <div class="ad-shell">
+      <div class="ad-head">
+        <span id="adTitle">Sponsor</span>
+        <button class="ad-close" type="button" onclick="cancelSponsorAd()" aria-label="Cancel sponsor">x</button>
+      </div>
+      <video id="sponsorVideo" class="ad-video" playsinline preload="metadata"></video>
+    </div>
+  </div>
+
+  <div id="wishOverlay" class="wish-overlay hidden" style="opacity: 0;">
+    <div class="wish-scene">
+      <div class="wish-glow" id="wishGlow" style="translate: none; rotate: none; scale: none; transform: scale(1.05, 1.05); opacity: 0;"></div>
+      <div class="wish-title" id="wishTitle" style="translate: none; rotate: none; scale: none; transform: translate(-178.32812px, 0px); opacity: 0;">Make a wish</div>
+
+      <svg id="wishSvg" class="wish-svg" viewBox="0 0 900 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g id="sparkles" class="wish-fade" style="opacity: 0;">
+          <circle cx="210" cy="130" r="3" fill="#fff2c9" opacity="0.8"></circle>
+          <circle cx="560" cy="110" r="2.5" fill="#fff2c9" opacity="0.7"></circle>
+          <circle cx="650" cy="170" r="2" fill="#a9ecff" opacity="0.7"></circle>
+          <circle cx="170" cy="200" r="2" fill="#a9ecff" opacity="0.75"></circle>
+          <circle cx="500" cy="90" r="2.5" fill="#fff2c9" opacity="0.8"></circle>
+        </g>
+
+        <g id="fountainGroup" class="wish-fade">
+  <image
+  id="wellTarget"
+  href="/well-animation.png"
+  x="195"
+  y="320"
+  width="900"
+  height="650"
+  preserveAspectRatio="xMidYMid meet"
+/>
+
+  <ellipse id="ripple1" cx="650" cy="545" rx="90" ry="18"
+  fill="none" stroke="#b4f1ff" stroke-width="4" opacity="0"></ellipse>
+
+<ellipse id="ripple2" cx="650" cy="545" rx="65" ry="12"
+  fill="none" stroke="#d8fbff" stroke-width="3" opacity="0"></ellipse>
+
+  <g id="splashGroup" opacity="0">
+    <circle id="drop1" cx="650" cy="500" r="5" fill="#bff4ff"></circle>
+    <circle id="drop2" cx="636" cy="508" r="4" fill="#9ee8ff"></circle>
+    <circle id="drop3" cx="664" cy="508" r="4" fill="#9ee8ff"></circle>
+    <circle id="drop4" cx="626" cy="515" r="3.5" fill="#bff4ff"></circle>
+    <circle id="drop5" cx="674" cy="515" r="3.5" fill="#bff4ff"></circle>
+  </g>
+</g>
+
+        <!-- redesigned hand — thumb clearly pointing up, coin rests on thumb tip -->
+        <g id="handGroup" class="wish-fade" transform="matrix(0.98481,0.17365,-0.17365,0.98481,-9.51946,-1.13407)" data-svg-origin="136.01853149414063 163.6303803253174" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;">
+
+          <!-- orange sleeve -->
+          <path d="M-5 148 C22 138, 64 137, 90 148 L90 238 C64 248, 22 248, -5 239 Z" fill="#f18a33"></path>
+
+          <!-- cuff ring -->
+          <ellipse cx="90" cy="192" rx="40" ry="52" fill="#f3eef7"></ellipse>
+          <ellipse cx="90" cy="192" rx="28" ry="38" fill="#e7dfee"></ellipse>
+
+          <!-- palm body -->
+          <path d="M86 100
+               C116 80, 222 82, 250 112
+               C270 134, 270 170, 258 197
+               C242 230, 204 247, 164 244
+               C124 241, 92 220, 84 190
+               C74 157, 68 120, 86 100Z" fill="#f4eff8"></path>
+
+          <!-- index finger (top row) -->
+          <rect x="104" y="74" width="108" height="46" rx="23" fill="#faf7fd"></rect>
+          <!-- middle finger -->
+          <rect x="118" y="116" width="98" height="44" rx="22" fill="#f3eef8"></rect>
+          <!-- ring finger -->
+          <rect x="130" y="156" width="86" height="42" rx="21" fill="#eee7f4"></rect>
+          <!-- pinky -->
+          <rect x="144" y="193" width="66" height="38" rx="19" fill="#e9e0f0"></rect>
+
+          <!-- crease lines between fingers -->
+          <path d="M112 116 C136 126, 168 126, 196 116" fill="none" stroke="#c9bdd7" stroke-width="3.5" stroke-linecap="round" opacity="0.6"></path>
+          <path d="M124 156 C146 165, 172 165, 194 156" fill="none" stroke="#cabfda" stroke-width="3.5" stroke-linecap="round" opacity="0.6"></path>
+          <path d="M136 193 C152 201, 168 201, 182 193" fill="none" stroke="#cabfda" stroke-width="3.5" stroke-linecap="round" opacity="0.6"></path>
+
+          <!-- THUMB — clearly sticking UPWARD from upper-left of palm -->
+          <g id="thumbPart" data-svg-origin="75.3472900390625 135.44208259582518" transform="matrix(0.99939,0.0349,-0.0349,0.99939,4.77289,-2.547)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px;">
+            <!-- thumb body -->
+            <path d="M86 141
+                 C70 126, 52 107, 44 85
+                 C34 61, 40 37, 62 31
+                 C84 25, 106 43, 110 69
+                 C115 91, 106 115, 90 133
+                 C88 136, 86 139, 86 141Z" fill="#f7f2fb"></path>
+            <!-- thumb nail — makes tip unmistakable -->
+            <rect x="44" y="37" width="30" height="20" rx="10" fill="#ddd0ec" opacity="0.75" transform="rotate(-8 59 47)"></rect>
+            <!-- thumb tip highlight -->
+            <ellipse cx="58" cy="51" rx="10" ry="7" fill="white" opacity="0.22" transform="rotate(-8 58 51)"></ellipse>
+            <!-- thumb knuckle crease -->
+            <path d="M54 97 C68 105, 84 105, 94 97" fill="none" stroke="#c9bdd7" stroke-width="3" stroke-linecap="round" opacity="0.55"></path>
+            <!-- invisible marker at the thumb pad (just behind the nail) — used to dynamically locate the coin -->
+            <circle id="thumbNailMarker" cx="64" cy="60" r="1" opacity="0"></circle>
+          </g>
+
+          <!-- palm shadow -->
+          <path d="M108 112
+               C92 126, 82 146, 82 170
+               C82 204, 104 226, 140 236" fill="none" stroke="#d8cde3" stroke-width="7" stroke-linecap="round" opacity="0.4"></path>
+        </g>
+
+        <!-- coinAnchor is repositioned dynamically in JS to the thumb nail position -->
+        <g id="coinAnchor" transform="translate(145.2821615009169 104.95546612198655)">
+          <g id="coinGroup" class="wish-fade" data-svg-origin="0 0" transform="matrix(1,0,0,1,324.7178,460.0445)" style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px; opacity: 0;">
+            <ellipse id="coinShadow" cx="0" cy="0" rx="22" ry="22" fill="#c68600" opacity="0.35"></ellipse>
+            <circle id="coinFace" cx="0" cy="0" r="20" fill="url(#coinGrad)"></circle>
+            <circle cx="0" cy="0" r="14" fill="none" stroke="#fff2a8" stroke-width="2" opacity="0.45"></circle>
+          </g>
+        </g>
+
+        <defs>
+          <radialGradient id="coinGrad" cx="30%" cy="30%">
+            <stop offset="0%" stop-color="#fff7ba"></stop>
+            <stop offset="45%" stop-color="#ffd45e"></stop>
+            <stop offset="100%" stop-color="#d19111"></stop>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    let progressInterval = null;
+    let countdownInterval = null;
+    let completionTimeout = null;
+    let cooldownUntil = 0;
+    let adInProgress = false;
+    let activeSponsorButton = null;
+    let sponsorWatchStartedAt = 0;
+    let sponsorMinimumWatchMs = 15000;
+    let sponsorFinished = false;
+
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    function getDeviceFingerprint() {
+      return [
+        screen.width,
+        screen.height,
+        screen.availWidth,
+        screen.availHeight,
+        screen.colorDepth,
+        window.devicePixelRatio || 1,
+        navigator.platform || "unknown",
+        navigator.hardwareConcurrency || "unknown",
+        navigator.maxTouchPoints || 0,
+        userTimeZone
+      ].join("|");
+    }
+
+    function getStableAnonId(source) {
+      let hash = 0;
+
+      for (let i = 0; i < source.length; i++) {
+        hash = ((hash << 5) - hash + source.charCodeAt(i)) | 0;
+      }
+
+      return String(1000 + (Math.abs(hash) % 9000));
+    }
+
+    const fingerprint = getDeviceFingerprint();
+
+    const creator = decodeURIComponent(window.location.pathname.substring(1)) || "Alex";
+    const params = new URLSearchParams(window.location.search);
+    let anonId = getStableAnonId(fingerprint);
+    localStorage.setItem("anonId", anonId);
+let supporterProfile = JSON.parse(
+  localStorage.getItem("supporterProfile") || "null"
+);
+let serverHasSupporterProfile = false;
+let supporterLifetimeSupports = 0;
+let supporterCreatorSupports = 0;
+let creatorTotalSupports = 0;
+let supporterBadgeCollection = [];
+let equippedSupporterBadge = null;
+let selectedSupporterBadgeId = "";
+let badgesMenuOpen = false;
+let removeSupporterPfp = false;
+let selectedSupporterPfpPreview = "";
+let stickerVideos = [];
+let stickerVideosLoaded = false;
+const stickerAssetVersion = Date.now();
+const BADGE_UNREAD_STORAGE_KEY = "unreadSupporterBadgeIds";
+const BADGE_KNOWN_STORAGE_KEY = "knownUnlockedSupporterBadgeIds";
+let unreadBadgeIds = new Set(readStoredIdList(BADGE_UNREAD_STORAGE_KEY));
+let knownUnlockedBadgeIds = new Set(readStoredIdList(BADGE_KNOWN_STORAGE_KEY));
+let badgeNotificationsInitialized = localStorage.getItem(BADGE_KNOWN_STORAGE_KEY) !== null;
+const BADGE_CATALOG = [
+  {
+    id: "og_wave",
+    label: "OG Wave",
+    short: "OG",
+    unlockCondition: "Support during Oscal beta",
+    description: "A supporter during Oscal beta."
+  },
+  {
+    id: "first_drop",
+    label: "First Drop",
+    short: "Drop",
+    unlockCondition: "First successful support",
+    description: "Completed a first successful support."
+  },
+  {
+    id: "wave_starter",
+    label: "Wave Starter",
+    short: "Wave",
+    unlockCondition: "Support 5 creators",
+    description: "Supported 5 different creators."
+  },
+  {
+    id: "fuel_provider",
+    label: "Fuel Provider",
+    short: "Fuel",
+    unlockCondition: "Reach 25 total supports",
+    description: "Reached 25 total supports."
+  },
+  {
+    id: "day_one",
+    label: "Day One",
+    short: "D1",
+    unlockCondition: "Be one of the first 5 supporters of a creator",
+    description: "One of the first 5 supporters of a creator."
+  }
+];
+
+function getStickerAssetUrl(src) {
+  if (!src || src.startsWith("data:") || src.startsWith("blob:")) return src;
+
+  const separator = src.includes("?") ? "&" : "?";
+  return `${src}${separator}sticker_v=${stickerAssetVersion}`;
+}
+
+const videoId = params.get("video") || "main";
+const videoTitle = params.get("title") || "Main support page";
+const videoThumbnail = params.get("thumbnail") || "";
+const platform = params.get("platform") || "unknown";
+function loadContentCard() {
+  if (videoId === "main") return;
+
+  const card = document.getElementById("contentCard");
+  const thumb = document.getElementById("contentThumb");
+
+  document.getElementById("contentTitleText").innerText = videoTitle;
+  document.getElementById("contentPlatformText").innerText = platform;
+
+  if (videoThumbnail) {
+    thumb.src = videoThumbnail;
+    thumb.style.display = "block";
+  } else {
+    thumb.style.display = "none";
+  }
+
+  card.style.display = "flex";
+}
+
+loadContentCard();
+    
+
+    async function loadCreatorProfile() {
+  const res = await fetch("/api/creator/" + encodeURIComponent(creator));
+  const profile = await res.json();
+
+  if (!profile) {
+    document.getElementById("headlineName").innerText = creator;
+    document.getElementById("avatar").innerText = creator.charAt(0).toUpperCase();
+    return;
+  }
+
+  document.getElementById("headlineName").innerText = profile.displayName;
+
+  const avatar = document.getElementById("avatar");
+  avatar.innerHTML = `<img src="${profile.profileImage}" alt="${profile.displayName}">`;
+}
+
+loadCreatorProfile();
+
+    function setStatus(message, type = "default") {
+      const el = document.getElementById("status");
+      el.className = "";
+      if (type === "success") el.classList.add("success");
+      if (type === "danger") el.classList.add("danger");
+      if (type === "warning") el.classList.add("warning");
+      el.innerText = message;
+    }
+
+    function updateMeter(count) {
+      const meterFill = document.getElementById("meterFill");
+      if (!meterFill) return;
+      const fill = Math.min((count % 25) * 4, 100);
+      meterFill.style.width = `${fill}%`;
+    }
+
+    function startProgressBar(duration = 15000) {
+      const bar = document.getElementById("progressBar");
+      const container = document.getElementById("progressContainer");
+      const text = document.getElementById("progressText");
+
+      clearInterval(progressInterval);
+      bar.style.width = "0%";
+      container.classList.remove("hidden");
+
+      const startTime = Date.now();
+
+      progressInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const percent = Math.min((elapsed / duration) * 100, 100);
+        const secondsLeft = Math.max(0, Math.ceil((duration - elapsed) / 1000));
+
+        bar.style.width = percent + "%";
+
+        if (percent < 30) {
+          text.innerText = `Loading sponsor... (${secondsLeft}s)`;
+        } else if (percent < 70) {
+          text.innerText = `Watching sponsor... (${secondsLeft}s)`;
+        } else {
+          text.innerText = `Sending support... (${secondsLeft}s)`;
+        }
+
+        if (percent >= 100) clearInterval(progressInterval);
+      }, 100);
+    }
+    function timeAgo(time) {
+  const seconds = Math.floor((Date.now() - time) / 1000);
+
+  if (seconds < 60) return "just now";
+
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
+function normalizeSupporterName(name) {
+  return String(name || "").trim().replace(/\s+/g, " ");
+}
+
+function validateSupporterName(name) {
+  if (!name) return "";
+  if (name.length > 24) return "Use 24 characters or fewer.";
+  if (!/^[A-Za-z0-9][A-Za-z0-9 _-]*$/.test(name)) {
+    return "Use letters, numbers, spaces, hyphens, or underscores. Start with a letter or number.";
+  }
+  return "";
+}
+
+function getProfileInitial(name) {
+  const match = String(name || "").match(/[A-Za-z0-9]/);
+  return match ? match[0].toUpperCase() : "A";
+}
+
+function getAnonymousName() {
+  return `Anonymous #${anonId}`;
+}
+
+function getCurrentSupporterName() {
+  if (serverHasSupporterProfile && supporterProfile?.name) {
+    return supporterProfile.name;
+  }
+
+  return getAnonymousName();
+}
+
+function getCurrentSupporterPfp() {
+  if (serverHasSupporterProfile && supporterProfile?.pfp) {
+    return supporterProfile.pfp;
+  }
+
+  return "";
+}
+
+function renderProfileAvatar(el, name, pfp) {
+  if (!el) return;
+
+  el.innerHTML = "";
+
+  if (pfp) {
+    const img = document.createElement("img");
+    img.src = pfp;
+    img.alt = "";
+    el.appendChild(img);
+    return;
+  }
+
+  el.innerText = getProfileInitial(name);
+}
+
+function createSupporterBadgeElement(badge) {
+  const el = document.createElement("span");
+  el.className = "supporter-badge";
+  el.dataset.badgeId = badge.id || "";
+  el.innerText = badge.short || badge.label || "Badge";
+  el.title = badge.description
+    ? `${badge.label}: ${badge.description}`
+    : badge.label || "Supporter badge";
+  return el;
+}
+
+function renderSupporterBadges(container, badges = [], limit = 5) {
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const badgeList = Array.isArray(badges) ? badges : [];
+  const visibleBadges = badgeList.slice(0, limit);
+  visibleBadges.forEach(badge => {
+    container.appendChild(createSupporterBadgeElement(badge));
+  });
+
+  if (badgeList.length > visibleBadges.length) {
+    const overflow = document.createElement("span");
+    overflow.className = "supporter-badge";
+    overflow.innerText = `+${badgeList.length - visibleBadges.length}`;
+    overflow.title = "More supporter badges";
+    container.appendChild(overflow);
+  }
+}
+
+function readStoredIdList(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value.filter(Boolean) : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function saveStoredIdSet(key, values) {
+  localStorage.setItem(key, JSON.stringify([...values].filter(Boolean)));
+}
+
+function getUnlockedBadgeIds(badges = supporterBadgeCollection) {
+  return (Array.isArray(badges) ? badges : [])
+    .filter(badge => badge?.id && badge.unlocked)
+    .map(badge => badge.id);
+}
+
+function persistBadgeNotificationState() {
+  saveStoredIdSet(BADGE_UNREAD_STORAGE_KEY, unreadBadgeIds);
+  saveStoredIdSet(BADGE_KNOWN_STORAGE_KEY, knownUnlockedBadgeIds);
+}
+
+function setNoticeBadge(el, count, visible) {
+  if (!el) return;
+
+  el.innerText = "!";
+  el.setAttribute(
+    "aria-label",
+    count === 1 ? "1 new badge" : `${count} new badges`
+  );
+  el.classList.toggle("hidden", !visible);
+}
+
+function updateBadgeNotificationUI() {
+  const unreadCount = unreadBadgeIds.size;
+  const dropdown = document.getElementById("supporterMenuDropdown");
+  const badgeToggle = document.getElementById("badgeMenuToggle");
+  const profileMenuOpen = dropdown && !dropdown.classList.contains("hidden");
+
+  setNoticeBadge(
+    document.getElementById("profileMenuNotice"),
+    unreadCount,
+    unreadCount > 0
+  );
+
+  setNoticeBadge(
+    document.getElementById("badgeMenuNotice"),
+    unreadCount,
+    unreadCount > 0 && profileMenuOpen && !badgesMenuOpen
+  );
+
+  if (badgeToggle) {
+    badgeToggle.classList.toggle(
+      "has-notice",
+      unreadCount > 0 && profileMenuOpen && !badgesMenuOpen
+    );
+  }
+}
+
+function trackBadgeUnlockNotifications(nextBadges, notify = false, previousUnlockedIds = null) {
+  const unlockedIds = getUnlockedBadgeIds(nextBadges);
+  const previousUnlockedSet = previousUnlockedIds
+    ? new Set(previousUnlockedIds)
+    : null;
+
+  if (!badgeNotificationsInitialized) {
+    knownUnlockedBadgeIds = new Set(unlockedIds);
+    if (notify) {
+      unlockedIds.forEach(id => unreadBadgeIds.add(id));
+    }
+    badgeNotificationsInitialized = true;
+    persistBadgeNotificationState();
+    updateBadgeNotificationUI();
+    return;
+  }
+
+  const newlyUnlocked = unlockedIds.filter(id => (
+    !knownUnlockedBadgeIds.has(id) ||
+    (notify && previousUnlockedSet && !previousUnlockedSet.has(id))
+  ));
+
+  newlyUnlocked.forEach(id => {
+    knownUnlockedBadgeIds.add(id);
+    if (notify) unreadBadgeIds.add(id);
+  });
+
+  persistBadgeNotificationState();
+  updateBadgeNotificationUI();
+}
+
+function markBadgeNotificationsSeen() {
+  if (!unreadBadgeIds.size) return;
+
+  unreadBadgeIds.clear();
+  persistBadgeNotificationState();
+  updateBadgeNotificationUI();
+}
+
+function markBadgeNotificationSeen(badgeId) {
+  if (!badgeId || !unreadBadgeIds.has(badgeId)) return;
+
+  unreadBadgeIds.delete(badgeId);
+  persistBadgeNotificationState();
+  updateBadgeNotificationUI();
+}
+
+function isLocallyUnlockedBadge(badgeId) {
+  if (badgeId === "og_wave" || badgeId === "first_drop") {
+    return supporterLifetimeSupports >= 1;
+  }
+
+  if (badgeId === "fuel_provider") {
+    return supporterLifetimeSupports >= 25;
+  }
+
+  if (badgeId === "day_one") {
+    return supporterCreatorSupports >= 1 && creatorTotalSupports > 0 && creatorTotalSupports <= 5;
+  }
+
+  return false;
+}
+
+function normalizeBadgeCollection(badges = []) {
+  const badgeList = Array.isArray(badges) ? badges : [];
+  const serverBadges = new Map(badgeList.map(badge => [badge.id, badge]));
+
+  return BADGE_CATALOG.map(baseBadge => {
+    const serverBadge = serverBadges.get(baseBadge.id) || {};
+    const hasServerUnlockedState = typeof serverBadge.unlocked === "boolean";
+
+    return {
+      ...baseBadge,
+      ...serverBadge,
+      unlocked: hasServerUnlockedState
+        ? serverBadge.unlocked || isLocallyUnlockedBadge(baseBadge.id)
+        : Boolean(serverBadge.id) || isLocallyUnlockedBadge(baseBadge.id)
+    };
+  });
+}
+
+function normalizeEquippedBadge(badge) {
+  if (!badge) {
+    try {
+      badge = JSON.parse(localStorage.getItem("equippedSupporterBadge") || "null");
+    } catch (_) {
+      badge = null;
+    }
+  }
+
+  if (!badge?.id) return null;
+
+  const matchingBadge = supporterBadgeCollection.find(item => item.id === badge.id);
+  return matchingBadge?.unlocked ? matchingBadge : null;
+}
+
+function setSupporterBadgeState(badges, equippedBadge, options = {}) {
+  const previousUnlockedIds = getUnlockedBadgeIds();
+  const nextBadges = normalizeBadgeCollection(badges);
+  trackBadgeUnlockNotifications(
+    nextBadges,
+    Boolean(options.notifyUnlocks),
+    previousUnlockedIds
+  );
+  supporterBadgeCollection = nextBadges;
+  equippedSupporterBadge = normalizeEquippedBadge(equippedBadge);
+}
+
+function renderEquippedSupporterBadge(container, badge) {
+  renderSupporterBadges(container, badge ? [badge] : [], 1);
+}
+
+function getSelectedSupporterBadge() {
+  return supporterBadgeCollection.find(badge => badge.id === selectedSupporterBadgeId) || null;
+}
+
+function closeSupporterBadgeDetail(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  selectedSupporterBadgeId = "";
+  renderBadgesMenu();
+}
+
+function selectSupporterBadge(badgeId, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  selectedSupporterBadgeId = badgeId;
+  markBadgeNotificationSeen(badgeId);
+  renderBadgesMenu();
+}
+
+function openBadgesMenu(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  badgesMenuOpen = true;
+  selectedSupporterBadgeId = "";
+  renderBadgesMenu();
+}
+
+function closeBadgesMenu(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  badgesMenuOpen = false;
+  selectedSupporterBadgeId = "";
+  renderBadgesMenu();
+}
+
+function renderBadgesMenu() {
+  const panel = document.getElementById("badgeMenuPanel");
+  const toggle = document.getElementById("badgeMenuToggle");
+  const summary = document.getElementById("badgeMenuSummary");
+
+  const totalBadges = supporterBadgeCollection.length || BADGE_CATALOG.length;
+  const unlockedBadges = getUnlockedBadgeIds().length;
+
+  if (summary) {
+    summary.innerText = `${unlockedBadges}/${totalBadges} unlocked`;
+  }
+
+  if (toggle) {
+    toggle.setAttribute("aria-expanded", String(badgesMenuOpen));
+  }
+
+  if (panel) {
+    panel.classList.toggle("hidden", !badgesMenuOpen);
+  }
+
+  if (badgesMenuOpen) {
+    renderBadgeCollection();
+  } else {
+    const collection = document.getElementById("supporterBadgeCollection");
+    const detail = document.getElementById("supporterBadgeDetail");
+
+    if (collection) collection.classList.remove("hidden");
+    if (detail) {
+      detail.innerHTML = "";
+      detail.classList.add("hidden");
+    }
+  }
+
+  updateBadgeNotificationUI();
+}
+
+function renderBadgeDetail() {
+  const detail = document.getElementById("supporterBadgeDetail");
+  if (!detail) return;
+
+  const badge = getSelectedSupporterBadge();
+
+  detail.innerHTML = "";
+  detail.classList.toggle("hidden", !badge);
+
+  if (!badge) return;
+
+  const isEquipped = equippedSupporterBadge?.id === badge.id;
+
+  const top = document.createElement("div");
+  top.className = "badge-detail-top";
+
+  const back = document.createElement("button");
+  back.type = "button";
+  back.className = "badge-detail-back";
+  back.innerText = "Back";
+  back.addEventListener("click", closeSupporterBadgeDetail);
+
+  const state = document.createElement("span");
+  state.className = "badge-detail-state";
+  state.innerText = badge.unlocked
+    ? isEquipped ? "Equipped" : "Unlocked"
+    : "Locked";
+
+  top.appendChild(back);
+  top.appendChild(state);
+
+  const head = document.createElement("div");
+  head.className = "badge-detail-head";
+  head.appendChild(createSupporterBadgeElement(badge));
+
+  const title = document.createElement("strong");
+  title.innerText = badge.label;
+  head.appendChild(title);
+
+  const description = document.createElement("p");
+  description.className = "badge-detail-description";
+  description.innerText = badge.description || badge.unlockCondition || "Supporter badge.";
+
+  const requirement = document.createElement("p");
+  requirement.className = "badge-detail-requirement";
+  requirement.innerText = badge.unlocked
+    ? "Unlocked"
+    : `Locked: ${badge.unlockCondition || "Requirement not met yet."}`;
+
+  const action = document.createElement("button");
+  action.type = "button";
+  action.className = "badge-detail-action";
+  action.disabled = !badge.unlocked || isEquipped;
+  action.innerText = badge.unlocked
+    ? isEquipped ? "Equipped" : "Equip badge"
+    : "Locked";
+
+  if (badge.unlocked && !isEquipped) {
+    action.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      equipSupporterBadge(badge.id);
+    });
+  }
+
+  detail.appendChild(top);
+  detail.appendChild(head);
+  detail.appendChild(description);
+  detail.appendChild(requirement);
+  detail.appendChild(action);
+}
+
+function renderBadgeCollection() {
+  const collection = document.getElementById("supporterBadgeCollection");
+  if (!collection) return;
+
+  collection.innerHTML = "";
+
+  const badges = Array.isArray(supporterBadgeCollection)
+    ? supporterBadgeCollection
+    : [];
+
+  if (!badges.length) {
+    const empty = document.createElement("p");
+    empty.className = "profile-lock-note";
+    empty.innerText = "Support to unlock badges.";
+    collection.appendChild(empty);
+    renderBadgeDetail();
+    return;
+  }
+
+  if (
+    selectedSupporterBadgeId &&
+    !badges.some(badge => badge.id === selectedSupporterBadgeId)
+  ) {
+    selectedSupporterBadgeId = "";
+  }
+
+  collection.classList.toggle("hidden", Boolean(selectedSupporterBadgeId));
+
+  badges.forEach(badge => {
+    const isEquipped = equippedSupporterBadge?.id === badge.id;
+    const isSelected = selectedSupporterBadgeId === badge.id;
+    const hasNotice = unreadBadgeIds.has(badge.id);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = [
+      "badge-option",
+      badge.unlocked ? "" : "locked",
+      isSelected ? "selected" : "",
+      isEquipped ? "equipped" : "",
+      hasNotice ? "has-notice" : ""
+    ].filter(Boolean).join(" ");
+    button.title = badge.unlocked
+      ? `${badge.label}: ${badge.description}`
+      : `${badge.label}: ${badge.unlockCondition || badge.description}`;
+
+    const badgePill = createSupporterBadgeElement(badge);
+
+    const copy = document.createElement("span");
+    copy.className = "badge-option-copy";
+
+    const label = document.createElement("strong");
+    label.innerText = badge.label;
+
+    const meta = document.createElement("span");
+    meta.innerText = badge.unlocked
+      ? badge.description
+      : badge.unlockCondition || "Locked";
+
+    copy.appendChild(label);
+    copy.appendChild(meta);
+
+    const state = document.createElement("span");
+    state.className = "badge-option-state";
+    state.innerText = badge.unlocked
+      ? isEquipped ? "Equipped" : "View"
+      : "Locked";
+
+    const right = document.createElement("span");
+    right.className = "badge-option-right";
+
+    if (hasNotice) {
+      const notice = document.createElement("span");
+      notice.className = "menu-notice badge-option-notice";
+      notice.innerText = "!";
+      notice.setAttribute("aria-label", "New badge");
+      right.appendChild(notice);
+    }
+
+    right.appendChild(state);
+
+    button.appendChild(badgePill);
+    button.appendChild(copy);
+    button.appendChild(right);
+
+    button.addEventListener("click", event => selectSupporterBadge(badge.id, event));
+
+    collection.appendChild(button);
+  });
+
+  renderBadgeDetail();
+}
+
+function updateSupporterMenu() {
+  const displayName = getCurrentSupporterName();
+  const displayPfp = getCurrentSupporterPfp();
+  const canEditProfile = supporterLifetimeSupports >= 3;
+  const supportsUntilUnlock = Math.max(0, 3 - supporterLifetimeSupports);
+  const editProfileBtn = document.getElementById("editProfileBtn");
+  const lockNote = document.getElementById("editProfileLockNote");
+
+  document.getElementById("supporterMenuName").innerText = displayName;
+  document.getElementById("supporterDropdownName").innerText = displayName;
+  document.getElementById("supporterTotalSupports").innerText = supporterLifetimeSupports;
+  document.getElementById("supporterDropdownState").innerText =
+    serverHasSupporterProfile ? "Saved supporter" : "Anonymous supporter";
+
+  renderEquippedSupporterBadge(
+    document.getElementById("supporterMenuBadges"),
+    equippedSupporterBadge
+  );
+
+  renderEquippedSupporterBadge(
+    document.getElementById("supporterDropdownBadges"),
+    equippedSupporterBadge
+  );
+
+  renderBadgesMenu();
+
+  if (editProfileBtn) {
+    editProfileBtn.disabled = !canEditProfile;
+    editProfileBtn.innerText = canEditProfile ? "Edit profile" : "Profile locked";
+  }
+
+  if (lockNote) {
+    lockNote.innerText = canEditProfile
+      ? ""
+      : `${supportsUntilUnlock} more support${supportsUntilUnlock === 1 ? "" : "s"} to unlock`;
+  }
+
+  renderProfileAvatar(
+    document.getElementById("supporterMenuAvatar"),
+    displayName,
+    displayPfp
+  );
+
+  renderProfileAvatar(
+    document.getElementById("supporterDropdownAvatar"),
+    displayName,
+    displayPfp
+  );
+}
+
+function updateSupporterPreview() {
+  const rawName = document.getElementById("supporterNameInput").value;
+  const cleanName = normalizeSupporterName(rawName);
+  const previewName = cleanName || getAnonymousName();
+  const previewPfp =
+    !removeSupporterPfp
+      ? selectedSupporterPfpPreview ||
+        (serverHasSupporterProfile ? supporterProfile?.pfp || "" : "")
+      : "";
+
+  renderProfileAvatar(
+    document.getElementById("supporterProfilePreview"),
+    previewName,
+    previewPfp
+  );
+}
+
+function isGreenScreenPixel(r, g, b) {
+  const strongestNonGreen = Math.max(r, b);
+  return (
+    g > 58 &&
+    g > r * 1.12 &&
+    g > b * 1.12 &&
+    g - strongestNonGreen > 14
+  );
+}
+
+function isGreenScreenRemovalPixel(r, g, b) {
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const strongestNonGreen = Math.max(r, b);
+  const greenDelta = g - strongestNonGreen;
+  const saturation = max === 0 ? 0 : (max - min) / max;
+
+  if (g < r || g < b) return false;
+
+  return (
+    (g > 42 && greenDelta > 10 && saturation > 0.16) ||
+    (g > 30 && greenDelta > 14 && saturation > 0.35) ||
+    (g > 78 && greenDelta > 6 && saturation > 0.28)
+  );
+}
+
+function isStickerKeyCandidate(r, g, b, keyMode = "mixed") {
+  const max = Math.max(r, g, b);
+  const isBlackKey = max < 6;
+
+  if (keyMode === "green") return isGreenScreenRemovalPixel(r, g, b);
+  if (keyMode === "black") return isBlackKey;
+
+  return isBlackKey || isGreenScreenRemovalPixel(r, g, b);
+}
+
+function detectStickerKeyMode(pixels, width, height) {
+  let greenEdges = 0;
+  let blackEdges = 0;
+  let sampledEdges = 0;
+  let greenFrame = 0;
+  let sampledFrame = 0;
+
+  function sample(x, y) {
+    const index = (y * width + x) * 4;
+    const r = pixels[index];
+    const g = pixels[index + 1];
+    const b = pixels[index + 2];
+    const max = Math.max(r, g, b);
+
+    sampledEdges++;
+    if (isGreenScreenPixel(r, g, b)) greenEdges++;
+    if (max < 12) blackEdges++;
+  }
+
+  function sampleFrame(x, y) {
+    const index = (y * width + x) * 4;
+    const r = pixels[index];
+    const g = pixels[index + 1];
+    const b = pixels[index + 2];
+
+    sampledFrame++;
+    if (isGreenScreenPixel(r, g, b)) greenFrame++;
+  }
+
+  const stepX = Math.max(1, Math.floor(width / 40));
+  const stepY = Math.max(1, Math.floor(height / 40));
+
+  for (let x = 0; x < width; x += stepX) {
+    sample(x, 0);
+    sample(x, height - 1);
+  }
+
+  for (let y = 0; y < height; y += stepY) {
+    sample(0, y);
+    sample(width - 1, y);
+  }
+
+  for (let y = 0; y < height; y += stepY) {
+    for (let x = 0; x < width; x += stepX) {
+      sampleFrame(x, y);
+    }
+  }
+
+  if (greenEdges / sampledEdges > 0.35 && greenEdges > blackEdges) {
+    return "green";
+  }
+
+  if (greenFrame / sampledFrame > 0.18) {
+    return "green";
+  }
+
+  return blackEdges > greenEdges ? "black" : "mixed";
+}
+
+function getEdgeKeyMask(pixels, width, height, keyMode = "mixed") {
+  const seen = new Uint8Array(width * height);
+  const queue = [];
+
+  function enqueue(x, y) {
+    if (x < 0 || y < 0 || x >= width || y >= height) return;
+
+    const pixelIndex = y * width + x;
+    if (seen[pixelIndex]) return;
+
+    const dataIndex = pixelIndex * 4;
+    const r = pixels[dataIndex];
+    const g = pixels[dataIndex + 1];
+    const b = pixels[dataIndex + 2];
+    const a = pixels[dataIndex + 3];
+
+    if (a === 0 || isStickerKeyCandidate(r, g, b, keyMode)) {
+      seen[pixelIndex] = 1;
+      queue.push(pixelIndex);
+    }
+  }
+
+  for (let x = 0; x < width; x++) {
+    enqueue(x, 0);
+    enqueue(x, height - 1);
+  }
+
+  for (let y = 0; y < height; y++) {
+    enqueue(0, y);
+    enqueue(width - 1, y);
+  }
+
+  for (let i = 0; i < queue.length; i++) {
+    const pixelIndex = queue[i];
+    const x = pixelIndex % width;
+    const y = Math.floor(pixelIndex / width);
+
+    enqueue(x + 1, y);
+    enqueue(x - 1, y);
+    enqueue(x, y + 1);
+    enqueue(x, y - 1);
+  }
+
+  return seen;
+}
+
+function removeGreenScreenSpill(pixels, width, height) {
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const dataIndex = (y * width + x) * 4;
+      const alpha = pixels[dataIndex + 3];
+
+      if (alpha === 0) continue;
+
+      const r = pixels[dataIndex];
+      const g = pixels[dataIndex + 1];
+      const b = pixels[dataIndex + 2];
+      const strongestNonGreen = Math.max(r, b);
+      const greenExcess = g - strongestNonGreen;
+      const transparentNear = countTransparentNeighbors(pixels, width, height, x, y, 2);
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const saturation = max === 0 ? 0 : (max - min) / max;
+      const isGreenFringe =
+        transparentNear > 0 &&
+        hasTransparentNeighbor(pixels, width, height, x, y, 2) &&
+        (greenExcess > 6 || saturation > 0.18) &&
+        g >= r &&
+        g >= b;
+
+      if (!isGreenFringe) continue;
+
+      if (
+        isGreenScreenRemovalPixel(r, g, b) ||
+        (greenExcess > 10 && transparentNear >= 3)
+      ) {
+        pixels[dataIndex + 3] = 0;
+      } else {
+        pixels[dataIndex + 1] = Math.min(g, strongestNonGreen);
+      }
+    }
+  }
+}
+
+function removeGreenScreenBackground(pixels) {
+  for (let i = 0; i < pixels.length; i += 4) {
+    const r = pixels[i];
+    const g = pixels[i + 1];
+    const b = pixels[i + 2];
+
+    if (isGreenScreenRemovalPixel(r, g, b)) {
+      pixels[i + 3] = 0;
+    }
+  }
+}
+
+function getGreenScreenBounds(pixels, width, height) {
+  const bounds = {
+    minX: width,
+    minY: height,
+    maxX: -1,
+    maxY: -1
+  };
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const index = (y * width + x) * 4;
+      const r = pixels[index];
+      const g = pixels[index + 1];
+      const b = pixels[index + 2];
+
+      if (!isGreenScreenRemovalPixel(r, g, b)) continue;
+
+      bounds.minX = Math.min(bounds.minX, x);
+      bounds.minY = Math.min(bounds.minY, y);
+      bounds.maxX = Math.max(bounds.maxX, x);
+      bounds.maxY = Math.max(bounds.maxY, y);
+    }
+  }
+
+  return bounds.maxX >= bounds.minX && bounds.maxY >= bounds.minY
+    ? bounds
+    : null;
+}
+
+function hasTransparentNeighbor(pixels, width, height, x, y, radius = 1) {
+  for (let dy = -radius; dy <= radius; dy++) {
+    const py = y + dy;
+    if (py < 0 || py >= height) continue;
+
+    for (let dx = -radius; dx <= radius; dx++) {
+      if (dx === 0 && dy === 0) continue;
+
+      const px = x + dx;
+      if (px < 0 || px >= width) continue;
+
+      if (pixels[(py * width + px) * 4 + 3] === 0) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function countTransparentNeighbors(pixels, width, height, x, y, radius = 1) {
+  let count = 0;
+
+  for (let dy = -radius; dy <= radius; dy++) {
+    const py = y + dy;
+    if (py < 0 || py >= height) continue;
+
+    for (let dx = -radius; dx <= radius; dx++) {
+      if (dx === 0 && dy === 0) continue;
+
+      const px = x + dx;
+      if (px < 0 || px >= width) continue;
+
+      if (pixels[(py * width + px) * 4 + 3] === 0) {
+        count++;
+      }
+    }
+  }
+
+  return count;
+}
+
+function getOpaqueBounds(pixels, width, height) {
+  const bounds = {
+    minX: width,
+    minY: height,
+    maxX: -1,
+    maxY: -1
+  };
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const alpha = pixels[(y * width + x) * 4 + 3];
+      if (alpha === 0) continue;
+
+      bounds.minX = Math.min(bounds.minX, x);
+      bounds.minY = Math.min(bounds.minY, y);
+      bounds.maxX = Math.max(bounds.maxX, x);
+      bounds.maxY = Math.max(bounds.maxY, y);
+    }
+  }
+
+  return bounds.maxX >= bounds.minX && bounds.maxY >= bounds.minY
+    ? bounds
+    : null;
+}
+
+function removeStickerBlackEdge(pixels, width, height) {
+  const bounds = getOpaqueBounds(pixels, width, height);
+  const maxPasses = 5;
+
+  if (!bounds) return;
+
+  const subjectHeight = bounds.maxY - bounds.minY + 1;
+  const footZoneStart = bounds.maxY - Math.max(24, subjectHeight * 0.2);
+
+  for (let pass = 0; pass < maxPasses; pass++) {
+    const toClear = [];
+    const neighborRadius = pass < 2 ? 2 : 1;
+    const darkLimit = pass < 2 ? 58 : 42;
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const pixelIndex = y * width + x;
+        const dataIndex = pixelIndex * 4;
+        const isFootZone = y >= footZoneStart;
+
+        if (pixels[dataIndex + 3] === 0) continue;
+        if (isFootZone && pass > 2) continue;
+
+        const r = pixels[dataIndex];
+        const g = pixels[dataIndex + 1];
+        const b = pixels[dataIndex + 2];
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+
+        if (isFootZone) {
+          const nearTransparent = countTransparentNeighbors(pixels, width, height, x, y, 1);
+          const exposedTransparent = countTransparentNeighbors(pixels, width, height, x, y, 2);
+          const isThinOuterHalo =
+            max < 64 &&
+            max - min < 28 &&
+            nearTransparent >= 2 &&
+            exposedTransparent >= 9;
+          const isSoftOuterHalo =
+            max < 78 &&
+            max - min < 22 &&
+            nearTransparent >= 3 &&
+            exposedTransparent >= 12;
+          const isExposedShoeHalo =
+            isThinOuterHalo ||
+            isSoftOuterHalo;
+
+          if (isExposedShoeHalo) {
+            toClear.push(dataIndex);
+          }
+
+          continue;
+        }
+
+        const isDarkEdge =
+          max < darkLimit ||
+          (max < 76 && max - min < 18 && r + g + b < 150);
+
+        if (!isDarkEdge) continue;
+
+        if (hasTransparentNeighbor(pixels, width, height, x, y, neighborRadius)) {
+          toClear.push(dataIndex);
+        }
+      }
+    }
+
+    if (!toClear.length) break;
+
+    toClear.forEach(dataIndex => {
+      pixels[dataIndex + 3] = 0;
+    });
+  }
+}
+
+function createKeyedStickerCanvas(src, className) {
+  const canvas = document.createElement("canvas");
+  canvas.className = className;
+  canvas.width = 220;
+  canvas.height = 220;
+
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  const sample = document.createElement("canvas");
+  sample.width = 320;
+  sample.height = 180;
+  const sampleCtx = sample.getContext("2d", { willReadFrequently: true });
+
+  const video = document.createElement("video");
+  video.src = getStickerAssetUrl(src);
+  video.muted = true;
+  video.loop = false;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.style.display = "none";
+
+  let frameId = 0;
+  let isDrawing = false;
+  let stableCrop = null;
+  let stableKeyMode = null;
+  const loopStart = 0.04;
+  const loopEndPadding = 0.18;
+
+  function getStickerLoopEnd() {
+    if (!Number.isFinite(video.duration) || video.duration <= 0.4) {
+      return 0;
+    }
+
+    return Math.max(loopStart + 0.18, video.duration - loopEndPadding);
+  }
+
+  function restartStickerLoop() {
+    const loopEnd = getStickerLoopEnd();
+    if (!loopEnd) return;
+
+    try {
+      video.currentTime = loopStart;
+    } catch (_) {}
+
+    video.play().catch(() => {});
+  }
+
+  function keepStickerLoopContinuous() {
+    const loopEnd = getStickerLoopEnd();
+    if (!loopEnd) return;
+
+    if (video.ended || video.currentTime >= loopEnd) {
+      restartStickerLoop();
+    }
+  }
+
+  function drawStickerFrame() {
+    if (!video.videoWidth || !video.videoHeight) {
+      frameId = requestAnimationFrame(drawStickerFrame);
+      return;
+    }
+
+    keepStickerLoopContinuous();
+
+    const sampleHeight = Math.max(
+      1,
+      Math.round(sample.width * (video.videoHeight / video.videoWidth))
+    );
+
+    if (sample.height !== sampleHeight) sample.height = sampleHeight;
+
+    sampleCtx.drawImage(video, 0, 0, sample.width, sample.height);
+
+    const sampleImage = sampleCtx.getImageData(0, 0, sample.width, sample.height);
+    const samplePixels = sampleImage.data;
+    const keyMode = detectStickerKeyMode(samplePixels, sample.width, sample.height);
+    if (!stableKeyMode || keyMode === "green") stableKeyMode = keyMode;
+    const activeKeyMode =
+      keyMode === "green" || stableKeyMode === "green"
+        ? "green"
+        : stableKeyMode || keyMode;
+    const sampleBackground = getEdgeKeyMask(
+      samplePixels,
+      sample.width,
+      sample.height,
+      activeKeyMode
+    );
+    let minX = sample.width;
+    let minY = sample.height;
+    let maxX = 0;
+    let maxY = 0;
+
+    for (let y = 0; y < sample.height; y++) {
+      for (let x = 0; x < sample.width; x++) {
+        const index = (y * sample.width + x) * 4;
+        const r = samplePixels[index];
+        const g = samplePixels[index + 1];
+        const b = samplePixels[index + 2];
+        const max = Math.max(r, g, b);
+        const isGreenKey = activeKeyMode === "green" && isGreenScreenRemovalPixel(r, g, b);
+
+        if (!isGreenKey && !sampleBackground[y * sample.width + x] && max > 3) {
+          minX = Math.min(minX, x);
+          minY = Math.min(minY, y);
+          maxX = Math.max(maxX, x);
+          maxY = Math.max(maxY, y);
+        }
+      }
+    }
+
+    const foundSubject = maxX > minX && maxY > minY;
+    const padding = foundSubject ? 10 : 0;
+    let cropMinX = foundSubject ? Math.max(0, minX - padding) : 0;
+    let cropMinY = foundSubject ? Math.max(0, minY - padding) : 0;
+    let cropMaxX = foundSubject ? Math.min(sample.width, maxX + padding) : sample.width;
+    let cropMaxY = foundSubject ? Math.min(sample.height, maxY + padding) : sample.height;
+
+    if (keyMode === "green") {
+      const greenBounds = getGreenScreenBounds(samplePixels, sample.width, sample.height);
+
+      if (greenBounds && !stableCrop) {
+        const greenCropInset = 3;
+        stableCrop = {
+          minX: Math.min(sample.width - 1, greenBounds.minX + greenCropInset),
+          minY: Math.min(sample.height - 1, greenBounds.minY + 1),
+          maxX: Math.max(1, greenBounds.maxX - greenCropInset),
+          maxY: Math.max(1, greenBounds.maxY - 1)
+        };
+      }
+    } else if (foundSubject) {
+      if (!stableCrop) {
+        stableCrop = { minX: cropMinX, minY: cropMinY, maxX: cropMaxX, maxY: cropMaxY };
+      } else {
+        stableCrop.minX = Math.min(stableCrop.minX, cropMinX);
+        stableCrop.minY = Math.min(stableCrop.minY, cropMinY);
+        stableCrop.maxX = Math.max(stableCrop.maxX, cropMaxX);
+        stableCrop.maxY = Math.max(stableCrop.maxY, cropMaxY);
+      }
+    }
+
+    if (stableCrop) {
+      cropMinX = stableCrop.minX;
+      cropMinY = stableCrop.minY;
+      cropMaxX = stableCrop.maxX;
+      cropMaxY = stableCrop.maxY;
+    }
+
+    const sourceX = (cropMinX / sample.width) * video.videoWidth;
+    const sourceY = (cropMinY / sample.height) * video.videoHeight;
+    const sourceW = ((cropMaxX - cropMinX) / sample.width) * video.videoWidth;
+    const sourceH = ((cropMaxY - cropMinY) / sample.height) * video.videoHeight;
+
+    const drawScale = Math.min(canvas.width / sourceW, canvas.height / sourceH);
+    const drawW = sourceW * drawScale;
+    const drawH = sourceH * drawScale;
+    const drawX = (canvas.width - drawW) / 2;
+    const drawY = (canvas.height - drawH) / 2;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(video, sourceX, sourceY, sourceW, sourceH, drawX, drawY, drawW, drawH);
+
+    const output = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = output.data;
+    const outputBackground = getEdgeKeyMask(pixels, canvas.width, canvas.height, activeKeyMode);
+    const protectedPixels = new Uint8Array(canvas.width * canvas.height);
+    const protectRadius = 4;
+    const protectRadiusSq = protectRadius * protectRadius;
+
+    if (activeKeyMode !== "green") {
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const pixelIndex = y * canvas.width + x;
+          const dataIndex = pixelIndex * 4;
+          const r = pixels[dataIndex];
+          const g = pixels[dataIndex + 1];
+          const b = pixels[dataIndex + 2];
+          const max = Math.max(r, g, b);
+
+          if (!outputBackground[pixelIndex] && max > 18) {
+            for (let dy = -protectRadius; dy <= protectRadius; dy++) {
+              const py = y + dy;
+              if (py < 0 || py >= canvas.height) continue;
+
+              for (let dx = -protectRadius; dx <= protectRadius; dx++) {
+                if (dx * dx + dy * dy > protectRadiusSq) continue;
+
+                const px = x + dx;
+                if (px < 0 || px >= canvas.width) continue;
+
+                protectedPixels[py * canvas.width + px] = 1;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < pixels.length; i += 4) {
+      const pixelIndex = i / 4;
+      const isObviousGreenScreen = isGreenScreenPixel(pixels[i], pixels[i + 1], pixels[i + 2]);
+
+      if (
+        isObviousGreenScreen ||
+        (activeKeyMode === "green" && isGreenScreenRemovalPixel(pixels[i], pixels[i + 1], pixels[i + 2]))
+      ) {
+        pixels[i + 3] = 0;
+        continue;
+      }
+
+      if (
+        outputBackground[pixelIndex] &&
+        (activeKeyMode === "green" || !protectedPixels[pixelIndex])
+      ) {
+        pixels[i + 3] = 0;
+      }
+    }
+
+    if (activeKeyMode === "green") {
+      removeGreenScreenBackground(pixels);
+      removeGreenScreenSpill(pixels, canvas.width, canvas.height);
+    } else {
+      removeStickerBlackEdge(pixels, canvas.width, canvas.height);
+    }
+    ctx.putImageData(output, 0, 0);
+    frameId = requestAnimationFrame(drawStickerFrame);
+  }
+
+  function startStickerDrawing() {
+    if (isDrawing) return;
+    isDrawing = true;
+    drawStickerFrame();
+  }
+
+  video.addEventListener("play", startStickerDrawing);
+  video.addEventListener("loadeddata", () => {
+    if (Number.isFinite(video.duration) && video.duration > 0.4 && video.currentTime < loopStart) {
+      try {
+        video.currentTime = loopStart;
+      } catch (_) {}
+    }
+
+    video.play().catch(() => {});
+    startStickerDrawing();
+  });
+  video.addEventListener("ended", restartStickerLoop);
+  video.addEventListener("error", () => {
+    canvas.classList.add("hidden");
+  });
+
+  canvas.addEventListener("remove", () => cancelAnimationFrame(frameId));
+  canvas._stickerVideo = video;
+  canvas._stickerFrameId = frameId;
+  video.play().catch(() => {});
+
+  return canvas;
+}
+
+function renderSupportReaction(el, reaction, reactionType = "emoji", stickerUrl = "") {
+  if (!el) return;
+
+  el.innerHTML = "";
+  el.className = "support-message";
+
+  if (reactionType === "sticker") {
+    el.classList.add("sticker-message");
+
+    if (stickerUrl) {
+      el.appendChild(createKeyedStickerCanvas(stickerUrl, "feed-sticker-canvas"));
+      return;
+    }
+
+    const label = document.createElement("span");
+    label.className = "feed-sticker-label";
+    label.innerText = reaction || "Sticker";
+    el.appendChild(label);
+    return;
+  }
+
+  el.innerText = reaction || "Support echoed into the well";
+}
+
+function addSupportToFeed(
+  name = "Someone",
+  time = Date.now(),
+  emoji = "",
+  pfp = "",
+  reactionType = "emoji",
+  stickerUrl = "",
+  equippedBadge = null
+) {
+  const feed = document.getElementById("liveFeed");
+  if (!feed) return;
+
+  const item = document.createElement("div");
+  item.className = "feed-item new-support";
+  if (reactionType === "sticker") {
+    item.classList.add("has-sticker");
+  }
+  item.dataset.time = time;
+
+  const left = document.createElement("div");
+  left.className = "feed-left";
+
+  const avatar = document.createElement("div");
+  avatar.className = "feed-avatar";
+  renderProfileAvatar(avatar, name, pfp);
+
+  const text = document.createElement("div");
+  text.className = "feed-text";
+
+  const nameLine = document.createElement("div");
+  nameLine.className = "feed-name-line";
+
+  const strong = document.createElement("strong");
+  strong.innerText = `${name} wished`;
+
+  const badgeStrip = document.createElement("span");
+  badgeStrip.className = "badge-strip";
+  renderEquippedSupporterBadge(badgeStrip, equippedBadge);
+
+  const message = document.createElement("span");
+  renderSupportReaction(message, emoji, reactionType, stickerUrl);
+
+  nameLine.appendChild(strong);
+  nameLine.appendChild(badgeStrip);
+  text.appendChild(nameLine);
+  text.appendChild(message);
+  left.appendChild(avatar);
+  left.appendChild(text);
+
+  const timeEl = document.createElement("div");
+  timeEl.className = "feed-time success";
+  timeEl.innerText = timeAgo(time);
+
+  item.appendChild(left);
+  item.appendChild(timeEl);
+
+  feed.prepend(item);
+
+  setTimeout(() => {
+    item.classList.remove("new-support");
+  }, 1300);
+}
+
+async function sendReaction(reaction, reactionType = "emoji", stickerUrl = "") {
+  const latestItem = document.querySelector("#liveFeed .feed-item");
+  if (!latestItem) return;
+
+  const message = latestItem.querySelector(".support-message");
+  if (!message) return;
+
+  renderSupportReaction(message, reaction, reactionType, stickerUrl);
+
+  await fetch("/support/emoji", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      creator,
+      anonId,
+      emoji: reaction,
+      reactionType,
+      stickerUrl
+    })
+  });
+
+  document.getElementById("emojiPicker").classList.add("hidden");
+}
+
+function sendEmoji(emoji) {
+  return sendReaction(emoji, "emoji");
+}
+
+function sendSticker(sticker) {
+  if (typeof sticker === "string") {
+    return sendReaction(sticker, "sticker");
+  }
+
+  return sendReaction("Sticker", "sticker", sticker.url);
+}
+
+function applyEquippedSupporterBadge(badge) {
+  equippedSupporterBadge = badge?.id ? badge : null;
+
+  if (equippedSupporterBadge) {
+    localStorage.setItem("equippedSupporterBadge", JSON.stringify(equippedSupporterBadge));
+  } else {
+    localStorage.removeItem("equippedSupporterBadge");
+  }
+
+  updateSupporterMenu();
+  loadCount();
+}
+
+async function equipSupporterBadge(badgeId) {
+  const localBadge = supporterBadgeCollection.find(
+    badge => badge.id === badgeId && badge.unlocked
+  );
+
+  if (!localBadge) {
+    setStatus("Badge is still locked.", "warning");
+    return;
+  }
+
+  applyEquippedSupporterBadge(localBadge);
+  setStatus(`${localBadge.label} equipped.`, "success");
+
+  try {
+    const res = await fetch("/support/badge", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ anonId, badgeId })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      console.warn("Badge equipped locally but server did not sync:", data.message);
+      return;
+    }
+
+    setSupporterBadgeState(data.badges, data.equippedBadge);
+    applyEquippedSupporterBadge(normalizeEquippedBadge(data.equippedBadge) || localBadge);
+  } catch (err) {
+    console.error("Failed to equip badge", err);
+  }
+}
+
+async function loadStickerVideos() {
+  try {
+    const res = await fetch(`/api/stickers?t=${Date.now()}`);
+    const data = await res.json();
+    stickerVideos = Array.isArray(data.stickers) ? data.stickers : [];
+  } catch (err) {
+    console.error("Failed to load stickers", err);
+    stickerVideos = [];
+  }
+
+  stickerVideosLoaded = true;
+  return stickerVideos;
+}
+
+function renderStickerButtons(stickers, lockedSupportsLeft = 0) {
+  const stickerRow = document.getElementById("stickerRow");
+  if (!stickerRow) return;
+
+  stickerRow.innerHTML = "";
+  const isLocked = lockedSupportsLeft > 0;
+
+  const options = stickers.length
+    ? stickers
+    : [
+        { title: "Golden wish", url: "" },
+        { title: "Boost burst", url: "" },
+        { title: "Deep end shine", url: "" },
+        { title: "Wishmaker", url: "" }
+      ];
+
+  options.forEach((sticker, index) => {
+    const button = document.createElement("button");
+    button.className = "sticker-btn";
+    if (index === 0) button.classList.add("first-sticker");
+    if (isLocked) button.classList.add("locked");
+    button.type = "button";
+    button.disabled = isLocked;
+
+    if (sticker.url) {
+      button.appendChild(
+        createKeyedStickerCanvas(sticker.url, "sticker-preview-canvas")
+      );
+    }
+
+    if (!sticker.url) {
+      const label = document.createElement("strong");
+      label.innerText = sticker.title;
+      button.appendChild(label);
+    }
+
+    if (isLocked) {
+      const lock = document.createElement("div");
+      lock.className = "sticker-lock-overlay";
+
+      const heading = document.createElement("strong");
+      heading.innerText = "Sticker locked";
+
+      const detail = document.createElement("span");
+      detail.innerText =
+        `${lockedSupportsLeft} more support${lockedSupportsLeft === 1 ? "" : "s"} to unlock`;
+
+      lock.appendChild(heading);
+      lock.appendChild(detail);
+      button.appendChild(lock);
+    } else {
+      button.addEventListener("click", () => sendSticker(sticker));
+    }
+
+    stickerRow.appendChild(button);
+  });
+}
+
+async function showReactionPicker(creatorSupportCount) {
+  const picker = document.getElementById("emojiPicker");
+  const emojiRow = document.getElementById("emojiRow");
+  const stickerRow = document.getElementById("stickerRow");
+  const title = document.getElementById("reactionPickerTitle");
+
+  if (!picker || !emojiRow || !stickerRow) return;
+
+  const supportCount = Number(creatorSupportCount);
+  const isThirdSupport = supportCount === 3;
+  const lockedStickerSupportsLeft = Math.max(0, 3 - supportCount);
+
+  emojiRow.classList.toggle("hidden", isThirdSupport);
+  stickerRow.classList.remove("hidden");
+
+  renderStickerButtons(
+    await loadStickerVideos(),
+    isThirdSupport ? 0 : lockedStickerSupportsLeft
+  );
+
+  if (title) {
+    title.innerText = isThirdSupport
+      ? "Choose a support sticker:"
+      : "Send a reaction into the deep end:";
+  }
+
+  picker.classList.remove("hidden");
+}
+function startSupporterLogin() {
+  if (supporterLifetimeSupports < 3) {
+    updateSupporterMenu();
+    return;
+  }
+
+  closeSupporterMenu();
+  removeSupporterPfp = false;
+  selectedSupporterPfpPreview = "";
+
+  document.getElementById("supporterModalTitle").innerText =
+    serverHasSupporterProfile ? "Edit profile" : "Claim your presence";
+  document.getElementById("supporterNameInput").value =
+    serverHasSupporterProfile && supporterProfile?.name
+      ? supporterProfile.name
+      : "";
+  document.getElementById("supporterPfpInput").value = "";
+  document.getElementById("supporterProfileError").innerText = "";
+  updateSupporterPreview();
+  document.getElementById("supporterLoginModal").classList.remove("hidden");
+}
+
+function closeSupporterLogin() {
+  document.getElementById("supporterLoginModal").classList.add("hidden");
+}
+
+function toggleSupporterMenu(event) {
+  if (event) event.stopPropagation();
+
+  const dropdown = document.getElementById("supporterMenuDropdown");
+  const button = document.getElementById("profileMenuButton");
+  const willOpen = dropdown.classList.contains("hidden");
+
+  if (willOpen) {
+    selectedSupporterBadgeId = "";
+    badgesMenuOpen = false;
+  }
+
+  dropdown.classList.toggle("hidden", !willOpen);
+  button.setAttribute("aria-expanded", String(willOpen));
+  renderBadgesMenu();
+}
+
+function closeSupporterMenu() {
+  const dropdown = document.getElementById("supporterMenuDropdown");
+  const button = document.getElementById("profileMenuButton");
+
+  badgesMenuOpen = false;
+  selectedSupporterBadgeId = "";
+
+  if (dropdown) dropdown.classList.add("hidden");
+  if (button) button.setAttribute("aria-expanded", "false");
+  renderBadgesMenu();
+}
+
+function clearSupporterPicture() {
+  removeSupporterPfp = true;
+  selectedSupporterPfpPreview = "";
+  document.getElementById("supporterPfpInput").value = "";
+  updateSupporterPreview();
+}
+
+function previewSupporterPicture() {
+  const file = document.getElementById("supporterPfpInput").files[0];
+
+  removeSupporterPfp = false;
+
+  if (!file) {
+    selectedSupporterPfpPreview = "";
+    updateSupporterPreview();
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    selectedSupporterPfpPreview = e.target.result;
+    updateSupporterPreview();
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function readSelectedProfileImage(file) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveSupporterProfile() {
+  const name = normalizeSupporterName(
+    document.getElementById("supporterNameInput").value
+  );
+  const nameError = validateSupporterName(name);
+  const errorEl = document.getElementById("supporterProfileError");
+
+  if (nameError) {
+    errorEl.innerText = nameError;
+    return;
+  }
+
+  errorEl.innerText = "";
+
+  const file = document.getElementById("supporterPfpInput").files[0];
+  const selectedPfp = await readSelectedProfileImage(file);
+  const pfp =
+    selectedPfp ??
+    (removeSupporterPfp ? "" : serverHasSupporterProfile ? supporterProfile?.pfp || "" : "");
+  const nextProfile = { name, pfp };
+
+  try {
+    const res = await fetch("/support/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        anonId,
+        name,
+        pfp
+      })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      errorEl.innerText = data.message || "Could not save identity.";
+      return;
+    }
+
+    supporterProfile = data.profile || nextProfile;
+    serverHasSupporterProfile = true;
+    setSupporterBadgeState(data.badges, data.equippedBadge);
+    selectedSupporterPfpPreview = "";
+    removeSupporterPfp = false;
+
+    localStorage.setItem(
+      "supporterProfile",
+      JSON.stringify(supporterProfile)
+    );
+
+    closeSupporterLogin();
+    document.getElementById("identityPrompt").classList.add("hidden");
+    updateSupporterMenu();
+    loadCount();
+  } catch (err) {
+    console.error("Failed to save supporter profile", err);
+    errorEl.innerText = "Could not save identity.";
+  }
+}
+
+    function resetProgressBar() {
+      clearInterval(progressInterval);
+      document.getElementById("progressBar").style.width = "0%";
+      document.getElementById("progressContainer").classList.add("hidden");
+      document.getElementById("progressText").innerText = "";
+    }
+
+    function stopCountdown() {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+
+    function clearCountdown() {
+      stopCountdown();
+
+      const countdownElem = document.getElementById("countdown");
+      if (countdownElem) countdownElem.innerText = "";
+    }
+
+    function formatTime(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+
+      if (hours > 0) return `${hours}h ${minutes}m ${secs}s`;
+      if (minutes > 0) return `${minutes}m ${secs}s`;
+      return `${secs}s`;
+    }
+
+    function syncCountdownWithClock() {
+      const countdownElem = document.getElementById("countdown");
+      if (!countdownElem) return false;
+
+      const remaining = Math.max(
+        0,
+        Math.ceil((cooldownUntil - Date.now()) / 1000)
+      );
+
+      if (remaining <= 0) {
+        cooldownUntil = 0;
+        clearCountdown();
+        return false;
+      }
+
+      countdownElem.innerText = `⏱ Try again in ${formatTime(remaining)}`;
+      return true;
+    }
+
+    function showCountdown(seconds) {
+      cooldownUntil = Date.now() + Math.max(0, seconds) * 1000;
+      stopCountdown();
+
+      if (!syncCountdownWithClock()) return;
+
+      countdownInterval = setInterval(syncCountdownWithClock, 1000);
+    }
+
+    async function checkSupportStatus() {
+  const res = await fetch("/support/status", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+body: JSON.stringify({
+  fingerprint,
+  timeZone: userTimeZone,
+  anonId,
+  creator
+})
+  });
+
+  const data = await res.json();
+  serverHasSupporterProfile = Boolean(data.hasProfile);
+  supporterLifetimeSupports = Number(data.lifetimeSupports || 0);
+  supporterCreatorSupports = Number(data.creatorSupports || 0);
+  setSupporterBadgeState(data.badges, data.equippedBadge);
+
+  if (serverHasSupporterProfile) {
+    supporterProfile = data.profile || { name: "", pfp: "" };
+    localStorage.setItem(
+      "supporterProfile",
+      JSON.stringify(supporterProfile)
+    );
+  } else {
+    supporterProfile = null;
+    localStorage.removeItem("supporterProfile");
+  }
+
+  updateSupporterMenu();
+
+  if (data.wait && data.wait > 0) {
+    showCountdown(data.wait);
+  } else if (!adInProgress) {
+    cooldownUntil = 0;
+    clearCountdown();
+  }
+  if (!serverHasSupporterProfile && data.lifetimeSupports >= 3) {
+  document.getElementById("identityPrompt").classList.remove("hidden");
+} else {
+  document.getElementById("identityPrompt").classList.add("hidden");
+}
+}
+
+let supportStatusRefresh = null;
+
+function refreshSupportStatus() {
+  if (supportStatusRefresh) return supportStatusRefresh;
+
+  supportStatusRefresh = checkSupportStatus()
+    .catch(err => {
+      console.error("Failed to refresh support status", err);
+      syncCountdownWithClock();
+    })
+    .finally(() => {
+      supportStatusRefresh = null;
+    });
+
+  return supportStatusRefresh;
+}
+
+function handlePageResume() {
+  syncCountdownWithClock();
+
+  if (!adInProgress) {
+    refreshSupportStatus();
+  }
+}
+
+    function updateStatCards(count) {
+      creatorTotalSupports = Number(count || 0);
+      document.getElementById("supportsValue").innerText = count;
+      const signNum = document.getElementById("signCountNum");
+      if (signNum) signNum.innerText = count;
+    }
+
+    async function readJsonResponse(response, label) {
+      const rawText = await response.text();
+
+      console.log(`${label} STATUS:`, response.status);
+      console.log(`${label} RAW RESPONSE:`, rawText);
+
+      try {
+        return JSON.parse(rawText);
+      } catch (err) {
+        throw new Error(
+          `${label} did not return JSON: ${rawText.slice(0, 200)}`
+        );
+      }
+    }
+
+    function finishSuccessfulSupport(completeData) {
+      cooldownUntil = Date.now() + 30000;
+
+      setStatus("Support sent!", "success");
+
+      const supports = completeData.supports || 0;
+
+      updateStatCards(supports);
+
+      supporterLifetimeSupports += 1;
+      supporterCreatorSupports = Number(
+        completeData.creatorSupports || supporterCreatorSupports + 1
+      );
+      setSupporterBadgeState(completeData.badges, completeData.equippedBadge, {
+        notifyUnlocks: true
+      });
+      updateSupporterMenu();
+
+      addSupportToFeed(
+        getCurrentSupporterName(),
+        Date.now(),
+        "",
+        getCurrentSupporterPfp(),
+        "emoji",
+        "",
+        equippedSupporterBadge
+      );
+
+      showReactionPicker(supporterCreatorSupports);
+
+      checkSupportStatus();
+      triggerWellGlow(4500);
+      showCountdown(30);
+    }
+
+    function playWishAnimationOrFinish(completeData) {
+      if (typeof gsap === "undefined") {
+        console.warn("GSAP did not load, skipping wish animation.");
+        finishSuccessfulSupport(completeData);
+        return;
+      }
+
+      try {
+        playWishAnimation(() => finishSuccessfulSupport(completeData));
+      } catch (err) {
+        console.error("Wish animation failed:", err);
+        finishSuccessfulSupport(completeData);
+      }
+    }
+
+    let glowTimer = null;
+    function triggerWellGlow(durationMs) {
+      const scene = document.getElementById("wellScene");
+      if (!scene) return;
+      scene.classList.add("glow-active");
+      clearTimeout(glowTimer);
+      glowTimer = setTimeout(() => {
+        scene.classList.remove("glow-active");
+      }, durationMs);
+    }
+
+    function hideSponsorAd() {
+      const overlay = document.getElementById("adOverlay");
+      const video = document.getElementById("sponsorVideo");
+
+      clearTimeout(completionTimeout);
+
+      if (video) {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+        video.onended = null;
+        video.onerror = null;
+        video.onloadedmetadata = null;
+        video.onplaying = null;
+        video.onclick = null;
+      }
+
+      if (overlay) {
+        overlay.classList.add("hidden");
+        overlay.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    function runSimulatedSponsor(btn) {
+      resetProgressBar();
+      setStatus("Watching sponsor...");
+      startProgressBar(15000);
+
+      clearTimeout(completionTimeout);
+      completionTimeout = setTimeout(() => {
+        completeAd(btn);
+      }, 15000);
+    }
+
+    function finishSponsorVideo(btn) {
+      if (sponsorFinished) return;
+      sponsorFinished = true;
+
+      if (!sponsorWatchStartedAt) sponsorWatchStartedAt = Date.now();
+
+      const elapsed = Date.now() - sponsorWatchStartedAt;
+      const remaining = Math.max(0, sponsorMinimumWatchMs - elapsed);
+
+      setStatus("Sending support...");
+
+      clearTimeout(completionTimeout);
+      completionTimeout = setTimeout(() => {
+        hideSponsorAd();
+        completeAd(btn);
+      }, remaining);
+    }
+
+    async function playSponsorVideo(btn) {
+      activeSponsorButton = btn;
+      sponsorFinished = false;
+      sponsorWatchStartedAt = 0;
+
+      let adData;
+
+      try {
+        const adRes = await fetch("/api/sponsor-ad");
+        adData = await readJsonResponse(adRes, "SPONSOR AD");
+      } catch (err) {
+        console.warn("Sponsor ad lookup failed, using simulated sponsor.", err);
+        runSimulatedSponsor(btn);
+        return;
+      }
+
+      const ad = adData.ad;
+      sponsorMinimumWatchMs = Number(adData.minimumWatchMs || 15000);
+
+      if (!ad || !ad.url) {
+        runSimulatedSponsor(btn);
+        return;
+      }
+
+      const overlay = document.getElementById("adOverlay");
+      const video = document.getElementById("sponsorVideo");
+      const title = document.getElementById("adTitle");
+
+      if (!overlay || !video) {
+        runSimulatedSponsor(btn);
+        return;
+      }
+
+      if (title) title.innerText = ad.title || "Sponsor";
+
+      resetProgressBar();
+      setStatus("Loading sponsor...");
+
+      overlay.classList.remove("hidden");
+      overlay.setAttribute("aria-hidden", "false");
+
+      video.src = ad.url;
+      video.currentTime = 0;
+      video.onloadedmetadata = () => {
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          sponsorMinimumWatchMs = Math.max(
+            sponsorMinimumWatchMs,
+            Math.ceil(video.duration * 1000)
+          );
+        }
+      };
+      video.onplaying = () => {
+        if (sponsorWatchStartedAt) return;
+
+        sponsorWatchStartedAt = Date.now();
+        setStatus("Watching sponsor...");
+        startProgressBar(sponsorMinimumWatchMs);
+      };
+      video.onended = () => finishSponsorVideo(btn);
+      video.onerror = () => {
+        hideSponsorAd();
+        resetProgressBar();
+        btn.disabled = false;
+        adInProgress = false;
+        setStatus("Sponsor video failed to load.", "danger");
+      };
+      video.onclick = () => {
+        if (video.paused && !sponsorFinished) {
+          video.play().catch(() => {});
+        }
+      };
+
+      try {
+        await video.play();
+      } catch (err) {
+        setStatus("Tap the sponsor video to start.", "warning");
+      }
+    }
+
+    function cancelSponsorAd() {
+      if (!adInProgress) {
+        hideSponsorAd();
+        return;
+      }
+
+      hideSponsorAd();
+      resetProgressBar();
+      adInProgress = false;
+
+      if (activeSponsorButton) {
+        activeSponsorButton.disabled = false;
+      }
+
+      setStatus("Sponsor cancelled. Start again to support.", "warning");
+    }
+
+    async function loadCount() {
+  try {
+    const res = await fetch("/count/" + encodeURIComponent(creator));
+    const data = await res.json();
+
+    const supports = data.supports || 0;
+
+    updateStatCards(supports);
+
+    const feed = document.getElementById("liveFeed");
+
+    if (feed) {
+      feed.innerHTML = "";
+
+      (data.recentSupports || []).reverse().forEach(item => {
+        addSupportToFeed(
+          item.name,
+          item.time,
+          item.emoji,
+          item.pfp,
+          item.reactionType,
+          item.stickerUrl,
+          item.equippedBadge ||
+            (String(item.anonId) === String(anonId) ? equippedSupporterBadge : null)
+        );
+      });
+    }
+
+  } catch (err) {
+    console.error("Failed to load count", err);
+  }
+}
+
+    async function startAd() {
+  syncCountdownWithClock();
+
+  const now = Date.now();
+
+  if (now < cooldownUntil) {
+    const secondsLeft = Math.ceil((cooldownUntil - now) / 1000);
+    setStatus("Please wait before supporting again.", "warning");
+    showCountdown(secondsLeft);
+    return;
+  }
+
+  const btn = document.getElementById("watchBtn");
+  btn.disabled = true;
+
+  try {
+    const startRes = await fetch("/event", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        type: "ad_start",
+        creator,
+        fingerprint,
+        anonId,
+        timeZone: userTimeZone,
+        videoId,
+        videoTitle,
+        videoThumbnail,
+        platform
+      })
+    });
+
+    const startData = await readJsonResponse(startRes, "AD START");
+
+    if (!startData.success) {
+      btn.disabled = false;
+      setStatus(startData.message || "Support blocked.", "warning");
+
+      if (startData.wait) {
+        showCountdown(startData.wait);
+      }
+
+      return;
+    }
+
+    adInProgress = true;
+    stopCountdown();
+    setStatus("Preparing sponsor flow...");
+    playSponsorVideo(btn);
+  } catch (err) {
+    console.error("startAd failed:", err);
+    btn.disabled = false;
+    adInProgress = false;
+    resetProgressBar();
+    setStatus("Support failed. Server or connection issue.", "danger");
+  }
+}
+
+    function playWishAnimation(onDone) {
+      const overlay = document.getElementById("wishOverlay");
+      const title = document.getElementById("wishTitle");
+      const glow = document.getElementById("wishGlow");
+
+      const sparkles = document.getElementById("sparkles");
+      const fountain = document.getElementById("fountainGroup");
+      const hand = document.getElementById("handGroup");
+      const thumb = document.getElementById("thumbPart");
+      const coin = document.getElementById("coinGroup");
+      const coinAnchor = document.getElementById("coinAnchor");
+
+      const ripple1 = document.getElementById("ripple1");
+      const ripple2 = document.getElementById("ripple2");
+      const splashGroup = document.getElementById("splashGroup");
+      const drop1 = document.getElementById("drop1");
+      const drop2 = document.getElementById("drop2");
+      const drop3 = document.getElementById("drop3");
+      const drop4 = document.getElementById("drop4");
+      const drop5 = document.getElementById("drop5");
+
+      overlay.classList.remove("hidden");
+
+      gsap.killTweensOf([
+        overlay, title, glow, sparkles, fountain, hand, thumb, coin,
+        ripple1, ripple2, splashGroup, drop1, drop2, drop3, drop4, drop5
+      ]);
+
+      gsap.set(overlay, { opacity: 1 });
+      gsap.set(title, { opacity: 0, y: 24 });
+      gsap.set(glow, { opacity: 0, scale: 0.8 });
+      gsap.set(sparkles, { opacity: 0 });
+      gsap.set(fountain, { opacity: 0, y: 20 });
+      // First place the hand at its FINAL animation position so we can measure
+      // the thumb-tip's true resting location (where the coin should sit on screen).
+      gsap.set(hand, { opacity: 0, x: 0, y: 0, rotation: 0, transformOrigin: "52% 62%" });
+      gsap.set(thumb, { rotation: 75, transformOrigin: "50% 95%" });
+
+      // Force layout, then measure the invisible nail marker's actual screen position.
+      const svgEl = document.getElementById("wishSvg");
+      const nailMarker = document.getElementById("thumbNailMarker");
+      const svgRect = svgEl.getBoundingClientRect();
+      const nailRect = nailMarker.getBoundingClientRect();
+      // SVG uses default preserveAspectRatio="xMidYMid meet": uniform scale + letterboxing.
+      const svgScale = Math.min(svgRect.width / 900, svgRect.height / 700);
+      const xOffset  = (svgRect.width  - 900 * svgScale) / 2;
+      const yOffset  = (svgRect.height - 700 * svgScale) / 2;
+      const nailSvgX = (nailRect.left + nailRect.width / 2 - svgRect.left - xOffset) / svgScale;
+      const nailSvgY = (nailRect.top  + nailRect.height / 2 - svgRect.top  - yOffset) / svgScale;
+      coinAnchor.setAttribute("transform", `translate(${nailSvgX} ${nailSvgY})`);
+
+      // Now reset the hand back to its entry position for the slide-in animation.
+      gsap.set(hand, { x: -90, y: 16, rotation: -6 });
+
+      // GSAP x/y on SVG elements use SVG user units (not CSS pixels) — no scale needed.
+      // Fountain centre is at SVG (470, 601). Stop coin at water surface (radius ~20).
+      const throwDxPx  = 650 - nailSvgX;
+      const throwDyPx  = 516 - nailSvgY;
+      const peakDxPx   = throwDxPx;
+      const peakDyPx   = Math.min(throwDyPx, 0) - 220;
+
+      gsap.set(coin, { opacity: 0, x: 0, y: 0, rotation: 0, scale: 1, transformOrigin: "50% 50%" });
+      gsap.set([ripple1, ripple2, splashGroup], { opacity: 0 });
+      gsap.set([drop1, drop2, drop3, drop4, drop5], { x: 0, y: 0 });
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          overlay.classList.add("hidden");
+          if (typeof onDone === "function") onDone();
+        }
+      });
+
+      tl.to(glow, {
+        opacity: 1,
+        scale: 1.05,
+        duration: 0.7,
+        ease: "power2.out"
+      }, 0);
+
+      tl.to(title, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "power3.out"
+      }, 0.05);
+
+      tl.to(sparkles, {
+        opacity: 1,
+        duration: 0.6
+      }, 0.15);
+
+      tl.to(fountain, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out"
+      }, 0.15);
+
+      tl.to(hand, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotation: 0,
+        duration: 0.7,
+        ease: "power3.out"
+      }, 0.35);
+
+      tl.to(coin, {
+        opacity: 1,
+        duration: 0.15
+      }, 0.82);
+
+      tl.to(hand, {
+        rotation: 10,
+        x: 16,
+        y: 6,
+        duration: 0.28,
+        ease: "power2.inOut"
+      }, 1.0);
+
+      tl.to(thumb, {
+        rotation: -5,
+        duration: 0.2,
+        ease: "power3.out"
+      }, 1.0);
+
+      tl.to(thumb, {
+        rotation: 2,
+        duration: 0.14,
+        ease: "power2.in"
+      }, 1.2);
+
+      tl.to(coin, {
+        x: peakDxPx,
+        y: peakDyPx,
+        duration: 0.5,
+        ease: "sine.out"
+      }, 1.03);
+
+      tl.to(coin, {
+        x: throwDxPx,
+        y: throwDyPx,
+        duration: 0.5,
+        ease: "sine.in"
+      }, 1.53);
+
+      tl.to(coin, {
+        rotation: 720,
+        duration: 1.0,
+        ease: "none"
+      }, 1.03);
+
+      tl.to(coin, {
+        opacity: 0,
+        duration: 0.08
+      }, 1.97);
+
+      tl.to(splashGroup, {
+        opacity: 1,
+        duration: 0.05
+      }, 2.05);
+
+      tl.to(drop1, { y: -34, duration: 0.3, ease: "power2.out" }, 2.05);
+      tl.to(drop2, { x: -16, y: -22, duration: 0.32, ease: "power2.out" }, 2.05);
+      tl.to(drop3, { x: 16, y: -22, duration: 0.32, ease: "power2.out" }, 2.05);
+      tl.to(drop4, { x: -26, y: -10, duration: 0.28, ease: "power2.out" }, 2.05);
+      tl.to(drop5, { x: 26, y: -10, duration: 0.28, ease: "power2.out" }, 2.05);
+
+      tl.to(ripple1, {
+        opacity: 1,
+        attr: { rx: 96, ry: 18 },
+        duration: 0.65,
+        ease: "power2.out"
+      }, 2.08);
+
+      tl.to(ripple2, {
+        opacity: 0.9,
+        attr: { rx: 70, ry: 13 },
+        duration: 0.52,
+        ease: "power2.out"
+      }, 2.14);
+
+      tl.to([splashGroup, ripple1, ripple2], {
+        opacity: 0,
+        duration: 0.42,
+        ease: "power1.out"
+      }, 2.5);
+
+      tl.to(hand, {
+        opacity: 0,
+        x: -40,
+        y: 20,
+        duration: 0.38
+      }, 2.45);
+
+      tl.to([title, glow, sparkles, fountain], {
+        opacity: 0,
+        duration: 0.55,
+        ease: "power2.out"
+      }, 2.85);
+
+      tl.to(overlay, {
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      }, 3.05);
+    }
+
+    async function completeAd(btn) {
+  try {
+    resetProgressBar();
+    adInProgress = false;
+    setStatus("Sending support...");
+
+    const completeRes = await fetch("/event", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        type: "ad_complete",
+        creator,
+        fingerprint,
+        anonId,
+        timeZone: userTimeZone,
+
+        supporterName:
+          serverHasSupporterProfile ? supporterProfile?.name || "" : "",
+        supporterPfp:
+          serverHasSupporterProfile ? supporterProfile?.pfp || "" : "",
+
+        videoId,
+        videoTitle,
+        videoThumbnail,
+        platform
+      })
+    });
+
+    const completeData = await readJsonResponse(completeRes, "AD COMPLETE");
+
+    if (!completeData.success) {
+      setStatus(completeData.message || "Support failed.", "danger");
+
+      if (completeData.wait) {
+        showCountdown(completeData.wait);
+      }
+
+      return;
+    }
+
+    playWishAnimationOrFinish(completeData);
+
+  } catch (err) {
+    console.error("completeAd failed:", err);
+    setStatus("Support failed. Server or connection issue.", "danger");
+    resetProgressBar();
+    adInProgress = false;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+    function copyLink() {
+      const link = window.location.href;
+      const btn = document.getElementById("copyBtn");
+      const original = btn.innerText;
+
+      navigator.clipboard.writeText(link).then(() => {
+        btn.innerText = "Copied";
+        setTimeout(() => {
+          btn.innerText = original;
+        }, 1400);
+      });
+    }
+const watchBtn = document.getElementById("watchBtn");
+
+watchBtn.addEventListener("mousemove", (e) => {
+  const rect = watchBtn.getBoundingClientRect();
+  watchBtn.style.setProperty("--x", `${e.clientX - rect.left}px`);
+  watchBtn.style.setProperty("--y", `${e.clientY - rect.top}px`);
+});
+
+document.getElementById("supporterNameInput").addEventListener("input", () => {
+  const name = normalizeSupporterName(
+    document.getElementById("supporterNameInput").value
+  );
+  document.getElementById("supporterProfileError").innerText =
+    validateSupporterName(name);
+  updateSupporterPreview();
+});
+
+document.addEventListener("click", (event) => {
+  const menu = document.getElementById("supporterMenu");
+  const path = typeof event.composedPath === "function"
+    ? event.composedPath()
+    : [];
+
+  if (menu && !menu.contains(event.target) && !path.includes(menu)) {
+    closeSupporterMenu();
+  }
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    handlePageResume();
+  }
+});
+
+window.addEventListener("focus", handlePageResume);
+window.addEventListener("pageshow", handlePageResume);
+
+setInterval(() => {
+  document.querySelectorAll("#liveFeed .feed-item").forEach(item => {
+    const time = Number(item.dataset.time);
+    const timeEl = item.querySelector(".feed-time");
+
+    if (timeEl && time) {
+      timeEl.innerText = timeAgo(time);
+    }
+  });
+}, 30000);
+window.addEventListener("beforeunload", () => {
+  if (adInProgress) {
+    localStorage.setItem("adInterrupted", "true");
+  }
+});
+    loadCount();
+    updateSupporterMenu();
+    if (localStorage.getItem("adInterrupted") === "true") {
+  localStorage.removeItem("adInterrupted");
+  setStatus("Ad was interrupted. Start again to support.", "warning");
+  resetProgressBar();
+  adInProgress = false;
+}
+refreshSupportStatus();
+  </script>
+</body></html>

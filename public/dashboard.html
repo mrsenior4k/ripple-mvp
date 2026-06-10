@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ripple Creator Dashboard</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(56, 189, 248, 0.18), transparent 26%),
+        radial-gradient(circle at 95% 20%, rgba(37, 99, 235, 0.22), transparent 26%),
+        linear-gradient(180deg, #050814, #0d1327);
+      color: #f8faff;
+      padding: 24px;
+    }
+
+    .dashboard {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  padding: 2px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9, #2563eb);
+}
+
+    .avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 54px);
+      letter-spacing: -2px;
+    }
+
+    .muted {
+      color: #aeb8d6;
+      margin: 6px 0 0;
+      font-weight: 700;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-weight: 900;
+      color: white;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+      backdrop-filter: blur(16px);
+    }
+
+    .label {
+      color: #aeb8d6;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .value {
+      font-size: 44px;
+      font-weight: 950;
+      letter-spacing: -2px;
+      margin-top: 12px;
+    }
+
+    .small-value {
+      margin-top: 14px;
+      font-size: 18px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .sub {
+      margin-top: 8px;
+      color: #aeb8d6;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 0.85fr;
+      gap: 16px;
+    }
+
+    .link-box {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.08);
+      word-break: break-all;
+      color: #dbeafe;
+      font-weight: 800;
+    }
+
+    .feed {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .feed-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .feed-left strong {
+      display: inline-block;
+      font-size: 14px;
+    }
+
+    .feed-name-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .supporter-badge {
+      height: 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 224, 132, 0.34);
+      background: rgba(255, 224, 132, 0.12);
+      color: #ffe8a8;
+      font-size: 9px;
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .supporter-badge[data-badge-id="og_wave"] {
+      border-color: rgba(96, 200, 255, 0.42);
+      background: rgba(56, 189, 248, 0.14);
+      color: #bcecff;
+    }
+
+    .supporter-badge[data-badge-id="first_drop"] {
+      border-color: rgba(93, 236, 174, 0.38);
+      background: rgba(53, 224, 161, 0.12);
+      color: #bcf8df;
+    }
+
+    .supporter-badge[data-badge-id="wave_starter"] {
+      border-color: rgba(111, 167, 255, 0.4);
+      background: rgba(37, 99, 235, 0.16);
+      color: #c8dcff;
+    }
+
+    .supporter-badge[data-badge-id="fuel_provider"] {
+      border-color: rgba(255, 201, 90, 0.45);
+      background: rgba(255, 201, 90, 0.14);
+      color: #ffe9ae;
+    }
+
+    .supporter-badge[data-badge-id="day_one"] {
+      border-color: rgba(255, 126, 202, 0.42);
+      background: rgba(255, 126, 202, 0.12);
+      color: #ffd1ef;
+    }
+
+    .feed-left span {
+      display: block;
+      margin-top: 4px;
+      color: #aeb8d6;
+      font-size: 13px;
+    }
+
+    .empty {
+      color: #aeb8d6;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 850px) {
+      .grid, .main { grid-template-columns: 1fr; }
+      .top { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="dashboard">
+    <section class="top">
+      <div class="profile">
+        <div class="avatar">
+          <img id="creatorImage" src="" alt="">
+        </div>
+
+        <div>
+          <h1 id="creatorName">Loading...</h1>
+          <p class="muted">Private analytics for your Ripple page.</p>
+        </div>
+      </div>
+
+      
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="label">Total supports</div>
+        <div class="value" id="totalSupports">0</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Estimated earned</div>
+        <div class="value" id="estimatedEarned">$0.00</div>
+      </div>
+
+      <div class="card">
+  <div class="label">Top supported content</div>
+
+  <div id="topVideosList" style="margin-top:16px; display:grid; gap:12px;">
+    <p class="empty">No supported content yet.</p>
+  </div>
+</div>
+
+    
+    </section>
+
+    <section class="main">
+      <div class="card">
+        <div class="label">Recent support</div>
+
+        <div class="feed" id="recentFeed">
+          <p class="empty">No recent support yet. When viewers support you, they’ll appear here.</p>
+        </div>
+      </div>
+
+      <div class="card">
+  <div class="label">Create tracked content link</div>
+
+  <input
+    id="contentTitle"
+    placeholder="Video title"
+    style="width:100%; margin-top:14px; padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.12); background:rgba(0,0,0,0.25); color:white; font-weight:800;"
+  >
+
+  <input
+  id="contentThumbnail"
+  placeholder="Thumbnail image URL"
+  style="width:100%; margin-top:10px; padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.12); background:rgba(0,0,0,0.25); color:white; font-weight:800;"
+>
+
+  <select
+    id="contentPlatform"
+    style="width:100%; margin-top:10px; padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.12); background:rgba(0,0,0,0.25); color:white; font-weight:800;"
+  >
+    <option value="tiktok">TikTok</option>
+    <option value="youtube">YouTube</option>
+    <option value="instagram">Instagram</option>
+  </select>
+
+  <button class="btn" style="margin-top:12px;" onclick="createTrackedLink()">
+    Generate link
+  </button>
+
+  <div class="link-box" id="trackedLink" style="display:none;"></div>
+</div>
+    </section>
+  </main>
+
+  <script>
+    let publicLink = "";
+let currentProfile = null;
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function renderDashboardBadge(badge) {
+  if (!badge) return "";
+
+  return `
+    <span class="badge-strip">
+      <span
+        class="supporter-badge"
+        data-badge-id="${escapeHtml(badge.id)}"
+        title="${escapeHtml(`${badge.label}: ${badge.description || ""}`)}"
+      >${escapeHtml(badge.short || badge.label || "Badge")}</span>
+    </span>
+  `;
+}
+
+    async function loadDashboard() {
+  const meRes = await fetch("/api/me");
+  const profile = await meRes.json();
+
+  console.log("LOGGED IN PROFILE:", profile);
+
+  currentProfile = profile;
+
+  if (!profile) {
+    window.location.href = "/auth/youtube";
+    return;
+  }
+
+  document.getElementById("creatorName").innerText = profile.displayName;
+ const img = document.getElementById("creatorImage");
+
+console.log("PROFILE IMAGE URL:", profile.profileImage);
+
+img.src = profile.profileImage || "";
+
+  publicLink = window.location.origin + "/" + profile.slug;
+
+  const possibleKeys = [
+    profile.slug,
+    "@" + profile.slug,
+    profile.slug?.replace("@", ""),
+    "@5thdimentionalbeing367",
+    "5thdimentionalbeing367",
+    "5TH DIMENTIONAL BEING"
+  ];
+
+  let countData = null;
+
+  for (const key of possibleKeys) {
+    const res = await fetch("/count/" + encodeURIComponent(key));
+    const data = await res.json();
+
+    console.log("TESTING KEY:", key, data);
+
+    if (data.supports > 0) {
+      countData = data;
+      console.log("FOUND CREATOR KEY:", key);
+      break;
+    }
+  }
+
+  if (!countData) {
+    countData = {
+      supports: 0,
+      earnings: 0,
+      topVideos: [],
+      recentSupports: []
+    };
+  }
+
+  const supports = Number(countData.supports || 0);
+  const earnings = Number(countData.earnings || 0);
+
+  document.getElementById("totalSupports").innerText = supports;
+  document.getElementById("estimatedEarned").innerText = "$" + earnings.toFixed(2);
+
+  if (countData.topVideos && countData.topVideos.length > 0) {
+    const list = document.getElementById("topVideosList");
+
+    list.innerHTML = countData.topVideos.map((video, index) => `
+      <div class="feed-item">
+        <div class="feed-left">
+          <strong>#${index + 1} ${video.videoTitle || "Untitled content"}</strong>
+          <span>${(video.platform || "unknown").toUpperCase()} • ${video.supports} supports</span>
+        </div>
+
+        <div style="font-size:28px;">
+          ${index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  if (countData.recentSupports && countData.recentSupports.length > 0) {
+    document.getElementById("recentFeed").innerHTML =
+      countData.recentSupports.map(item => `
+        <div class="feed-item">
+          <div class="feed-left">
+            <div class="feed-name-line">
+              <strong>${escapeHtml(item.name)}</strong>
+              ${renderDashboardBadge(item.equippedBadge)}
+            </div>
+            <span>${escapeHtml(item.emoji ? item.emoji : "Support echoed into the well")}</span>
+          </div>
+
+          <div>${new Date(item.time).toLocaleTimeString()}</div>
+        </div>
+      `).join("");
+  }
+}
+   
+
+    function copyPublicLink() {
+      navigator.clipboard.writeText(publicLink);
+    }
+    function createTrackedLink() {
+  const title = document.getElementById("contentTitle").value.trim();
+  const platform = document.getElementById("contentPlatform").value;
+
+  if (!title) {
+    alert("Add a video title first.");
+    return;
+  }
+
+  const thumbnail = document.getElementById("contentThumbnail").value.trim();
+
+  const videoId =
+    platform + "-" + Date.now();
+
+  const link =
+    window.location.origin +
+    "/" +
+    encodeURIComponent(currentProfile.slug) +
+    "?video=" +
+    encodeURIComponent(videoId) +
+    "&title=" +
+    encodeURIComponent(title) +
+    "&platform=" +
+    encodeURIComponent(platform);
+    "&thumbnail=" +
+    encodeURIComponent(thumbnail)
+
+  const box = document.getElementById("trackedLink");
+  box.innerText = link;
+  box.style.display = "block";
+
+  navigator.clipboard.writeText(link);
+}
+
+    loadDashboard();
+  </script>
+  
+</body>
+</html>
